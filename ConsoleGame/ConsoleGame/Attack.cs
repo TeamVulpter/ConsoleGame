@@ -159,14 +159,14 @@ namespace ConsoleGame
                 for (int i = 0; i < invader.Count; i++)
                 {
 
-                    EnemyInvader oldRock = invader[i];
-                    EnemyInvader newRock = new EnemyInvader();
-                    newRock.x = oldRock.x;
-                    newRock.y = oldRock.y + 1;
-                    newRock.c = oldRock.c;
-                    newRock.color = oldRock.color;
+                    EnemyInvader oldInvader = invader[i];
+                    EnemyInvader newInvader = new EnemyInvader();
+                    newInvader.x = oldInvader.x;
+                    newInvader.y = oldInvader.y + 1;
+                    newInvader.c = oldInvader.c;
+                    newInvader.color = oldInvader.color;
 
-                    if (newRock.y == spaceship.y && newRock.x == spaceship.x)
+                    if (newInvader.y == spaceship.y && newInvader.x == spaceship.x)
                     {
                         livesCount--;
                         PrintOnPosition(spaceship.x, spaceship.y, 'X', ConsoleColor.Red);
@@ -184,9 +184,9 @@ namespace ConsoleGame
                             //return;
                         }
                     }
-                    if (newRock.y < Console.WindowHeight)
+                    if (newInvader.y < Console.WindowHeight)
                     {
-                        newList.Add(newRock);
+                        newList.Add(newInvader);
                     }
                 }
                 invader = newList;
