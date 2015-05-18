@@ -10,8 +10,8 @@ namespace VulpterInvaders
     {
         internal int x;
         internal int y;
-        //internal string[,] c;
-        internal string c;
+        internal string[,] c;
+        //internal string c;
         internal ConsoleColor color;
         internal int speed;
     }

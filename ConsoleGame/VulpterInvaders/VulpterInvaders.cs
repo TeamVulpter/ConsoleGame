@@ -25,20 +25,20 @@ namespace VulpterInvaders
 
         }
 
-        //static void PrintStringPlayerOnPosition(int x, int y, string[,] c, ConsoleColor color = ConsoleColor.Gray)
-        static void PrintStringPlayerOnPosition(int x, int y, string c, ConsoleColor color = ConsoleColor.Gray)
+        static void PrintStringPlayerOnPosition(int x, int y, string[,] c, ConsoleColor color = ConsoleColor.Gray)
+        //static void PrintStringPlayerOnPosition(int x, int y, string c, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
-            Console.WriteLine(c);
-            //for (int row = 0; row < c.GetLength(0); row++)
-            //{
-            //    for (int col = 0; col < c.GetLength(1); col++)
-            //    {
-            //        Console.Write(c[row,col]);
-            //    }
-            //    Console.WriteLine();
-            //}
+            //Console.WriteLine(c);
+            for (int row = 0; row < c.GetLength(0); row++)
+            {
+                for (int col = 0; col < c.GetLength(1); col++)
+                {
+                    Console.Write(c[row, col]);
+                }
+                Console.WriteLine();
+            }
         }
         static void Main(string[] args)
         {
@@ -51,12 +51,12 @@ namespace VulpterInvaders
             Player spaceship = new Player();
             spaceship.x = 5;
             spaceship.y = Console.WindowHeight - 2;
-            spaceship.c = "_/|\\_";
-            //dwarf.c = new string[3,3]{
-            //        { "*"  ,  "*",  "*"},
-            //        { "*"   , "*",  "*" },
-            //        { "*" ,  "*",   "*"}
-            //    };
+            //spaceship.c = "_/|\\_";
+            spaceship.c = new string[3, 3]{
+                    { "*"  ,  "*",  "*"},
+                    { "*"   , "*",  "*" },
+                    { "*" ,  "*",   "*"}
+                };
             spaceship.color = ConsoleColor.Yellow;
             Random randomGenerator = new Random();
             List<Enemy> rocks = new List<Enemy>();
@@ -178,7 +178,7 @@ namespace VulpterInvaders
                     newRock.c = oldRock.c;
                     newRock.color = oldRock.color;
 
-                    if (newRock.y == spaceship.y && newRock.x == spaceship.x)
+                    if (newRock.y == spaceship.y && newRock.x == spaceship.x || newRock.y == spaceship.y + 1 && newRock.x == spaceship.x || newRock.y == spaceship.y + 2 && newRock.x == spaceship.x)
                     {
                         livesCount--;
                         PrintOnPosition(spaceship.x, spaceship.y, 'X', ConsoleColor.Red);
