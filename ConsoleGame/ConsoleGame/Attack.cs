@@ -36,6 +36,17 @@ namespace ConsoleGame
             Console.WriteLine(c);
         }
 
+        public static bool IsThereACollision(int playerX, int playerY, int enemyX, int enemyY)
+        {
+            if (enemyY == playerY && (enemyX == playerX || enemyX == playerX + 1 || enemyX == playerX + 2 ||
+                      enemyX + 1 == playerX || enemyX + 2 == playerX || enemyX + 1 == playerX + 1 ||
+                      enemyX + 2 == playerX + 2 || enemyX + 1 == playerX + 2 || enemyX + 2 == playerX + 1))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void UpdateAttack()
         {
             PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
@@ -132,9 +143,7 @@ namespace ConsoleGame
                     newInvader.C = oldInvader.C;
                     newInvader.Color = oldInvader.Color;
 
-                    if (newInvader.Y == spaceship.Y && (newInvader.X == spaceship.X || newInvader.X == spaceship.X + 1 || newInvader.X == spaceship.X + 2 ||
-                       newInvader.X + 1 == spaceship.X || newInvader.X + 2 == spaceship.X || newInvader.X + 1 == spaceship.X + 1 ||
-                       newInvader.X + 2 == spaceship.X + 2 || newInvader.X + 1 == spaceship.X + 2 || newInvader.X + 2 == spaceship.X + 1))
+                    if (IsThereACollision(spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
                     {
                         livesCount--;
                         PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
