@@ -18,7 +18,7 @@ namespace ConsoleGame
         Visualization print = new Visualization();
         static List<List<int>> shots = new List<List<int>>();
 
-        static List<Bullet> bullets = new List<Bullet>();
+        //static List<Bullet> bullets = new List<Bullet>();
         private static void Shoot()
         {
             //foreach (var item in bullets)
@@ -73,6 +73,7 @@ namespace ConsoleGame
         {
             PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
             Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
+            List<Bullet> bullets = new List<Bullet>();
             Random randomGenerator = new Random();
             List<EnemyInvader> invader = new List<EnemyInvader>();
             Map map = new Map();
@@ -166,6 +167,7 @@ namespace ConsoleGame
 
                         Shoot();
                         //Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
+                        //bullets.Add(bullet);
                     }
                 }
                 List<EnemyInvader> newList = new List<EnemyInvader>();
@@ -209,6 +211,7 @@ namespace ConsoleGame
 
                 print.PrintStringPlayerOnPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
                 bulletPosition = spaceship.X+2;
+                //Visualization.DrawShots(shots, shotSymbol);
                 Visualization.DrawShots(shots, shotSymbol);
                 //for (int i = 0; i < shots.Count; i++)
                 //{
