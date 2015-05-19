@@ -12,8 +12,8 @@ namespace ConsoleGame
         double speed = 100.0;
         double acceleration = 0.5;
         int playfieldWidth = 50;
-        int livesCount = 2;
-        internal bool isCaptured=false;
+        int livesCount = 10;
+        internal bool isCaptured = false;
         public void PrintOnPosition(int x, int y, char c, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.SetCursorPosition(x, y);
@@ -38,7 +38,7 @@ namespace ConsoleGame
 
         public void UpdateAttack()
         {
-            
+
             PlayerShip spaceship = new PlayerShip();
             spaceship.x = 5;
             spaceship.y = Console.WindowHeight - 2;
@@ -61,74 +61,45 @@ namespace ConsoleGame
                 // Falling enemies color and shape
                 if (chance < 2)
                 {
-                    EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.color = ConsoleColor.Green;
-                    newInvader.x = randomGenerator.Next(0, playfieldWidth);
-                    newInvader.y = 0;
-                    newInvader.c = "\\\\|//";
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green);
                     invader.Add(newInvader);
+
                 }
                 else if (chance < 5)
                 {
-                    EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.color = ConsoleColor.Red;
-                    newInvader.x = randomGenerator.Next(0, playfieldWidth);
-                    newInvader.y = 0;
-                    newInvader.c = "\\\\|//";
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Red);
+
                     invader.Add(newInvader);
                 }
                 else if (chance < 8)
                 {
-                    EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.color = ConsoleColor.Blue;
-                    newInvader.x = randomGenerator.Next(0, playfieldWidth);
-                    newInvader.y = 0;
-                    newInvader.c = "\\\\|//";
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Blue);
+
                     invader.Add(newInvader);
                 }
                 else if (chance < 10)
                 {
-                    EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.color = ConsoleColor.Cyan;
-                    newInvader.x = randomGenerator.Next(0, playfieldWidth);
-                    newInvader.y = 0;
-                    newInvader.c = "\\\\|//";
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Cyan);
                     invader.Add(newInvader);
                 }
                 else if (chance < 13)
                 {
-                    EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.color = ConsoleColor.Magenta;
-                    newInvader.x = randomGenerator.Next(0, playfieldWidth);
-                    newInvader.y = 0;
-                    newInvader.c = "\\\\|//";
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
                     invader.Add(newInvader);
                 }
                 else if (chance < 15)
                 {
-                    EnemyInvader newRock = new EnemyInvader();
-                    newRock.color = ConsoleColor.Magenta;
-                    newRock.x = randomGenerator.Next(0, playfieldWidth);
-                    newRock.y = 0;
-                    newRock.c = "\\\\|//";
-                    invader.Add(newRock);
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
+                    invader.Add(newInvader);
                 }
                 else if (chance < 18)
                 {
-                    EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.color = ConsoleColor.DarkBlue;
-                    newInvader.x = randomGenerator.Next(0, playfieldWidth);
-                    newInvader.y = 0;
-                    newInvader.c = "\\\\|//";
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.DarkBlue);
                     invader.Add(newInvader);
                 }
                 else if (chance < 20)
                 {
-                    EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.color = ConsoleColor.White;
-                    newInvader.x = randomGenerator.Next(0, playfieldWidth);
-                    newInvader.y = 0;
-                    newInvader.c = "\\\\|//";
+                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.White);
                     invader.Add(newInvader);
                 }
 
@@ -161,12 +132,14 @@ namespace ConsoleGame
 
                     EnemyInvader oldInvader = invader[i];
                     EnemyInvader newInvader = new EnemyInvader();
-                    newInvader.x = oldInvader.x;
-                    newInvader.y = oldInvader.y + 1;
-                    newInvader.c = oldInvader.c;
-                    newInvader.color = oldInvader.color;
+                    newInvader.X = oldInvader.X;
+                    newInvader.Y = oldInvader.Y + 1;
+                    newInvader.C = oldInvader.C;
+                    newInvader.Color = oldInvader.Color;
 
-                    if (newInvader.y == spaceship.y && newInvader.x == spaceship.x)
+                    if (newInvader.Y == spaceship.y && (newInvader.X == spaceship.x || newInvader.X == spaceship.x + 1 || newInvader.X == spaceship.x + 2 ||
+                       newInvader.X + 1 == spaceship.x || newInvader.X + 2 == spaceship.x || newInvader.X + 1 == spaceship.x + 1 ||
+                       newInvader.X + 2 == spaceship.x + 2 || newInvader.X + 1 == spaceship.x + 2 || newInvader.X + 2 == spaceship.x + 1))
                     {
                         livesCount--;
                         PrintOnPosition(spaceship.x, spaceship.y, 'X', ConsoleColor.Red);
@@ -176,15 +149,15 @@ namespace ConsoleGame
                             PrintStringOnPosition(8, 10, "GAME OVER", ConsoleColor.Red);
                             PrintStringOnPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
                             Console.Clear();
-                           //isCaptured=true;
-                           // map.CreateTable();
-                           // map.UpdateMap();
+                            //isCaptured=true;
+                            // map.CreateTable();
+                            // map.UpdateMap();
                             Console.ReadLine();
                             Environment.Exit(0);
                             //return;
                         }
                     }
-                    if (newInvader.y < Console.WindowHeight)
+                    if (newInvader.Y < Console.WindowHeight)
                     {
                         newList.Add(newInvader);
                     }
@@ -192,16 +165,16 @@ namespace ConsoleGame
                 invader = newList;
                 Console.Clear();
                 PrintStringPlayerOnPosition(spaceship.x, spaceship.y, spaceship.c, spaceship.color);
-                foreach (EnemyInvader rock in invader)
+                foreach (EnemyInvader unit in invader)
                 {
-                    PrintStringOnPosition(rock.x, rock.y, rock.c, rock.color);
+                    PrintStringOnPosition(unit.X, unit.Y, unit.C, unit.Color);
                 }
                 if (hitted)
                 {
                     PrintOnPosition(spaceship.x, spaceship.y, 'X', ConsoleColor.Red);// It appears when it's game over
-                    
+
                 }
-               
+
                 PrintStringOnPosition(10, 1, "LIVES: " + livesCount, ConsoleColor.White);
                 PrintStringOnPosition(20, 1, "SCORES: ", ConsoleColor.White);
                 PrintStringOnPosition(30, 1, "TIME: ", ConsoleColor.White);

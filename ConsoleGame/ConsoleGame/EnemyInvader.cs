@@ -8,9 +8,27 @@ namespace ConsoleGame
 {
     internal class EnemyInvader
     {
-        public int x { get; set; }
-        public int y { get; set; }
-        public string c { get; set; }
-        public ConsoleColor color { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public string C { get; set; }
+        public ConsoleColor Color { get; set; }
+
+        public EnemyInvader()
+        {
+
+        }
+
+        public EnemyInvader(int x, int y, string c, ConsoleColor color)
+            :this()
+        {
+            this.X = x;
+            this.Y = y;
+            this.C = c;
+            this.Color = color;
+        }
+
+        
+
+        
     }
 }

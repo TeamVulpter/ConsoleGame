@@ -178,7 +178,7 @@ namespace VulpterInvaders
                     newRock.c = oldRock.c;
                     newRock.color = oldRock.color;
 
-                    if (newRock.y == spaceship.y && newRock.x == spaceship.x || newRock.y == spaceship.y + 1 && newRock.x == spaceship.x || newRock.y == spaceship.y + 2 && newRock.x == spaceship.x)
+                    if (newRock.y == spaceship.y && newRock.x == spaceship.x || newRock.x == spaceship.x + 1 && newRock.y == spaceship.y || newRock.x == spaceship.x + 2 && newRock.y == spaceship.y)
                     {
                         livesCount--;
                         PrintOnPosition(spaceship.x, spaceship.y, 'X', ConsoleColor.Red);
