@@ -42,11 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attack.cs" />
+    <Compile Include="Bullet.cs" />
+    <Compile Include="Controls.cs" />
     <Compile Include="EnemyInvader.cs" />
     <Compile Include="GameLauncher.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="PlayerShip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Visualization.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

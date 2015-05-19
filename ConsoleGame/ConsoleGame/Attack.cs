@@ -9,47 +9,70 @@ namespace ConsoleGame
 {
     internal class Attack
     {
-        double speed = 100.0;
+        double speed = 400.0;
         double acceleration = 0.5;
         int playfieldWidth = 50;
         int livesCount = 10;
-        //internal bool isCaptured = false;
-        public void PrintOnPosition(int x, int y, char c, ConsoleColor color = ConsoleColor.Gray)
+        static char shotSymbol = '|';
+        static int bulletPosition = 0;
+        Visualization print = new Visualization();
+        static List<List<int>> shots = new List<List<int>>();
+
+        static List<Bullet> bullets = new List<Bullet>();
+        private static void Shoot()
         {
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = color;
-            Console.WriteLine(c);
+            //foreach (var item in bullets)
+            //{
+            //    item.X = bulletPosition;
+            //    item.Y = Console.WindowHeight - 3;
+            //}
+            shots.Add(new List<int>()
+            {
+                bulletPosition,
+                Console.WindowHeight - 3
+            });
         }
 
-        public void PrintStringOnPosition(int x, int y, string str, ConsoleColor color = ConsoleColor.Gray)
+        private static void UpdateShots()
         {
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = color;
-            Console.WriteLine(str);
+            for (int i = 0; i < shots.Count; i++)
+            {
+                shots[i][1] = shots[i][1] - 1;
+            }
 
-        }
+            int index = -1;
 
-        public void PrintStringPlayerOnPosition(int x, int y, string c, ConsoleColor color = ConsoleColor.Gray)
-        {
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = color;
-            Console.WriteLine(c);
+            for (int i = 0; i < shots.Count; i++)
+            {
+                if (shots[i][1] <= 1)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) 
+            {
+                shots.RemoveAt(index);
+            }
         }
 
         public static bool IsThereACollision(int playerX, int playerY, int enemyX, int enemyY)
         {
-            if (enemyY == playerY && (enemyX == playerX || enemyX == playerX + 1 || enemyX == playerX + 2 ||
+                if (enemyY == playerY && (enemyX == playerX || enemyX == playerX + 1 || enemyX == playerX + 2 || 
                       enemyX + 1 == playerX || enemyX + 2 == playerX || enemyX + 1 == playerX + 1 ||
                       enemyX + 2 == playerX + 2 || enemyX + 1 == playerX + 2 || enemyX + 2 == playerX + 1))
-            {
-                return true;
-            }
-            return false;
+                {
+                    return true;
+                }
+              
+                return false;
         }
 
         public void UpdateAttack()
         {
             PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
+            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
             Random randomGenerator = new Random();
             List<EnemyInvader> invader = new List<EnemyInvader>();
             Map map = new Map();
@@ -57,9 +80,9 @@ namespace ConsoleGame
             while (true)
             {
                 speed += acceleration;
-                if (speed > 400)
+                if (speed > 200)
                 {
-                    speed = 400;
+                    speed = 200;
                 }
                 bool isHit = false;
 
@@ -67,9 +90,9 @@ namespace ConsoleGame
                 // Falling enemies color and shape
                 if (chance < 2)
                 {
+                
                     EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green);
                     invader.Add(newInvader);
-
                 }
                 else if (chance < 5)
                 {
@@ -97,6 +120,7 @@ namespace ConsoleGame
                 {
                     EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
                     invader.Add(newInvader);
+
                 }
                 else if (chance < 18)
                 {
@@ -107,6 +131,7 @@ namespace ConsoleGame
                 {
                     EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.White);
                     invader.Add(newInvader);
+                    acceleration = 10;
                 }
 
 
@@ -122,14 +147,25 @@ namespace ConsoleGame
                         if (spaceship.X - 1 >= 0)
                         {
                             spaceship.X = spaceship.X - 1;
+                            //speed = 550;
                         }
+                        
                     }
                     else if (pressedKey.Key == ConsoleKey.RightArrow)
                     {
                         if (spaceship.X + 1 < playfieldWidth)
                         {
                             spaceship.X = spaceship.X + 1;
+                            //speed=550;
                         }
+
+                    }
+
+                    if (pressedKey.Key == ConsoleKey.Spacebar)
+                    {
+
+                        Shoot();
+                        //Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
                     }
                 }
                 List<EnemyInvader> newList = new List<EnemyInvader>();
@@ -143,15 +179,17 @@ namespace ConsoleGame
                     newInvader.C = oldInvader.C;
                     newInvader.Color = oldInvader.Color;
 
+                    UpdateShots();
+
                     if (IsThereACollision(spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
                     {
                         livesCount--;
-                        PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
+                        print.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
                         if (livesCount <= 0)
                         {
 
-                            PrintStringOnPosition(8, 10, "GAME OVER", ConsoleColor.Red);
-                            PrintStringOnPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
+                            print.PrintStringOnPosition(8, 10, "GAME OVER", ConsoleColor.Red);
+                            print.PrintStringOnPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
                             //Console.Clear();
                             //isCaptured=true;
                             // map.CreateTable();
@@ -168,21 +206,29 @@ namespace ConsoleGame
                 }
                 invader = newList;
                 Console.Clear();
-                PrintStringPlayerOnPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
+
+                print.PrintStringPlayerOnPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
+                bulletPosition = spaceship.X+2;
+                Visualization.DrawShots(shots, shotSymbol);
+                //for (int i = 0; i < shots.Count; i++)
+                //{
+                //    Visualization.DrawSymbolAtCoordinates(shots[i].X, shots[i].Y, shots[i].C, shots[i].Color);   
+                //}
+               
                 foreach (EnemyInvader unit in invader)
                 {
-                    PrintStringOnPosition(unit.X, unit.Y, unit.C, unit.Color);
+                    print.PrintStringOnPosition(unit.X, unit.Y, unit.C, unit.Color);
                 }
                 if (isHit)
                 {
-                    PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);// It appears when it's game over
+                    print.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);// It appears when it's game over
 
                 }
 
-                PrintStringOnPosition(10, 1, "LIVES: " + livesCount, ConsoleColor.White);
-                PrintStringOnPosition(20, 1, "SCORES: ", ConsoleColor.White);
-                PrintStringOnPosition(30, 1, "TIME: ", ConsoleColor.White);
-                Thread.Sleep(150);
+                print.PrintStringOnPosition(10, 1, "LIVES: " + livesCount, ConsoleColor.White);
+                print.PrintStringOnPosition(20, 1, "SCORES: ", ConsoleColor.White);
+                print.PrintStringOnPosition(30, 1, "TIME: ", ConsoleColor.White);
+                Thread.Sleep((int)(600-speed));
             }
         }
     }
