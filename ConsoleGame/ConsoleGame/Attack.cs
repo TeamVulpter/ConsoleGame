@@ -13,7 +13,7 @@ namespace ConsoleGame
         double acceleration = 0.5;
         int playfieldWidth = 50;
         int livesCount = 10;
-        internal bool isCaptured = false;
+        //internal bool isCaptured = false;
         public void PrintOnPosition(int x, int y, char c, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.SetCursorPosition(x, y);
@@ -38,12 +38,7 @@ namespace ConsoleGame
 
         public void UpdateAttack()
         {
-
-            PlayerShip spaceship = new PlayerShip();
-            spaceship.x = 5;
-            spaceship.y = Console.WindowHeight - 2;
-            spaceship.c = "_/|\\_";
-            spaceship.color = ConsoleColor.Yellow;
+            PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
             Random randomGenerator = new Random();
             List<EnemyInvader> invader = new List<EnemyInvader>();
             Map map = new Map();
@@ -55,7 +50,7 @@ namespace ConsoleGame
                 {
                     speed = 400;
                 }
-                bool hitted = false;
+                bool isHit = false;
 
                 int chance = randomGenerator.Next(0, 100);
                 // Falling enemies color and shape
@@ -113,16 +108,16 @@ namespace ConsoleGame
                     }
                     if (pressedKey.Key == ConsoleKey.LeftArrow)
                     {
-                        if (spaceship.x - 1 >= 0)
+                        if (spaceship.X - 1 >= 0)
                         {
-                            spaceship.x = spaceship.x - 1;
+                            spaceship.X = spaceship.X - 1;
                         }
                     }
                     else if (pressedKey.Key == ConsoleKey.RightArrow)
                     {
-                        if (spaceship.x + 1 < playfieldWidth)
+                        if (spaceship.X + 1 < playfieldWidth)
                         {
-                            spaceship.x = spaceship.x + 1;
+                            spaceship.X = spaceship.X + 1;
                         }
                     }
                 }
@@ -137,18 +132,18 @@ namespace ConsoleGame
                     newInvader.C = oldInvader.C;
                     newInvader.Color = oldInvader.Color;
 
-                    if (newInvader.Y == spaceship.y && (newInvader.X == spaceship.x || newInvader.X == spaceship.x + 1 || newInvader.X == spaceship.x + 2 ||
-                       newInvader.X + 1 == spaceship.x || newInvader.X + 2 == spaceship.x || newInvader.X + 1 == spaceship.x + 1 ||
-                       newInvader.X + 2 == spaceship.x + 2 || newInvader.X + 1 == spaceship.x + 2 || newInvader.X + 2 == spaceship.x + 1))
+                    if (newInvader.Y == spaceship.Y && (newInvader.X == spaceship.X || newInvader.X == spaceship.X + 1 || newInvader.X == spaceship.X + 2 ||
+                       newInvader.X + 1 == spaceship.X || newInvader.X + 2 == spaceship.X || newInvader.X + 1 == spaceship.X + 1 ||
+                       newInvader.X + 2 == spaceship.X + 2 || newInvader.X + 1 == spaceship.X + 2 || newInvader.X + 2 == spaceship.X + 1))
                     {
                         livesCount--;
-                        PrintOnPosition(spaceship.x, spaceship.y, 'X', ConsoleColor.Red);
+                        PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
                         if (livesCount <= 0)
                         {
 
                             PrintStringOnPosition(8, 10, "GAME OVER", ConsoleColor.Red);
                             PrintStringOnPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
-                            Console.Clear();
+                            //Console.Clear();
                             //isCaptured=true;
                             // map.CreateTable();
                             // map.UpdateMap();
@@ -164,14 +159,14 @@ namespace ConsoleGame
                 }
                 invader = newList;
                 Console.Clear();
-                PrintStringPlayerOnPosition(spaceship.x, spaceship.y, spaceship.c, spaceship.color);
+                PrintStringPlayerOnPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
                 foreach (EnemyInvader unit in invader)
                 {
                     PrintStringOnPosition(unit.X, unit.Y, unit.C, unit.Color);
                 }
-                if (hitted)
+                if (isHit)
                 {
-                    PrintOnPosition(spaceship.x, spaceship.y, 'X', ConsoleColor.Red);// It appears when it's game over
+                    PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);// It appears when it's game over
 
                 }
 
