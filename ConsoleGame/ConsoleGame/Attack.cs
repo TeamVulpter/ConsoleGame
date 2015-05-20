@@ -53,19 +53,21 @@ namespace ConsoleGame
             }
         }
 
-        public static bool IsThereACollision(int playerX, int playerY, int enemyX, int enemyY)
+        public static bool CheckCollision(string invader, string spaceship, int spaceshipX, int spaceshipY, int invaderX, int invaderY)
         {
-            if (enemyY == playerY && (enemyX == playerX || enemyX == playerX + 1 || enemyX == playerX + 2 || enemyX+3 == playerX || enemyX+3 == playerX + 1 ||
-                  enemyX + 1 == playerX || enemyX + 2 == playerX || enemyX + 1 == playerX + 1 || enemyX + 4 == playerX || enemyX + 4 == playerX + 1 ||
-                  enemyX + 2 == playerX + 2 || enemyX + 1 == playerX + 2 || enemyX + 2 == playerX + 1 || enemyX + 3 == playerX + 2 || enemyX + 3 == playerX + 1 ||
-                  enemyX == playerX + 3 || enemyX == playerX + 4 || enemyX+1 == playerX + 3 || enemyX+1 == playerX + 4 || enemyX + 4 == playerX + 2 || enemyX + 4 == playerX + 1 ||
-                  enemyX+2 == playerX + 3 || enemyX+2 == playerX + 4|| enemyX+3 == playerX + 3 || enemyX+3 == playerX + 4 ||
-                  enemyX+4 == playerX + 3 || enemyX+4 == playerX + 4))
+            bool result=false;
+            for (int i = 0; i < invader.Length; i++)
             {
-                return true;
-            }
-
-            return false;
+                for (int j = 0; j < spaceship.Length; j++)
+                {
+                    if (spaceshipY==invaderY && spaceshipX+j==invaderX+i)
+                    {
+                        result = true;
+                    }
+                }
+                
+            }   
+            return result;
         }
 
         public void UpdateAttack()
@@ -179,7 +181,7 @@ namespace ConsoleGame
 
                     UpdateShots();
 
-                    if (IsThereACollision(spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
+                    if(CheckCollision(newInvader.C, spaceship.C, spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
                     {
                         livesCount--;
                         print.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
