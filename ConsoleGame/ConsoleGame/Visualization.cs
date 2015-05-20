@@ -30,7 +30,7 @@ namespace ConsoleGame
             Console.WriteLine(c);
         }
 
-        public static void DrawSymbolAtCoordinates(int shotX, int shotY, char symbol, ConsoleColor color = ConsoleColor.Gray)
+        public static void DrawSymbolAtCoordinates(int shotX, int shotY, string symbol, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.SetCursorPosition(shotX, shotY);
             Console.ForegroundColor = color;

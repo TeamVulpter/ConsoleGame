@@ -10,7 +10,7 @@ namespace ConsoleGame
     {
         public int X { get; set; }
         public int Y { get; set; }
-        public char C { get; set; }
+        public string C { get; set; }
         public ConsoleColor Color { get; set; }
 
         public Bullet()
@@ -18,7 +18,7 @@ namespace ConsoleGame
 
         }
 
-        public Bullet(int x, int y, char c, ConsoleColor color)
+        public Bullet(int x, int y, string c, ConsoleColor color)
             :this()
         {
             this.X = x;

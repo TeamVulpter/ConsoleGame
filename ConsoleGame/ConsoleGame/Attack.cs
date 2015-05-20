@@ -13,13 +13,14 @@ namespace ConsoleGame
         double acceleration = 0.5;
         int playfieldWidth = 50;
         int livesCount = 10;
+        int scoresCount = 0;
         static int bulletPosition = 0;
         Visualization print = new Visualization();
         static List<Bullet> shots = new List<Bullet>();
         
         private static void Shoot()
         {
-            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
+            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue);
             shots.Add(bullet);
             foreach (var shot in shots)
             {
@@ -73,7 +74,7 @@ namespace ConsoleGame
         public void UpdateAttack()
         {
             PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
-            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
+            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue);
             List<Bullet> bullets = new List<Bullet>();
             Random randomGenerator = new Random();
             List<EnemyInvader> invader = new List<EnemyInvader>();
@@ -92,7 +93,6 @@ namespace ConsoleGame
                 // Falling enemies color and shape
                 if (chance < 2)
                 {
-
                     EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green);
                     invader.Add(newInvader);
                 }
@@ -133,7 +133,6 @@ namespace ConsoleGame
                 {
                     EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.White);
                     invader.Add(newInvader);
-                    acceleration = 10;
                 }
 
 
@@ -168,6 +167,7 @@ namespace ConsoleGame
                         Shoot();
                     }
                 }
+
                 List<EnemyInvader> newList = new List<EnemyInvader>();
                 for (int i = 0; i < invader.Count; i++)
                 {
@@ -178,8 +178,6 @@ namespace ConsoleGame
                     newInvader.Y = oldInvader.Y + 1;
                     newInvader.C = oldInvader.C;
                     newInvader.Color = oldInvader.Color;
-
-                    UpdateShots();
 
                     if(CheckCollision(newInvader.C, spaceship.C, spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
                     {
@@ -199,19 +197,43 @@ namespace ConsoleGame
                             //return;
                         }
                     }
+
+                    
+                    
+                   
+                    
                     if (newInvader.Y < Console.WindowHeight)
                     {
                         newList.Add(newInvader);
                     }
                 }
+
+               
                 invader = newList;
+                
+                foreach (Bullet item in shots)
+                {
+                    for (int j = 0; j < invader.Count; j++)
+                    {
+                        if (CheckCollision(invader[j].C, item.C, item.X, item.Y, invader[j].X, invader[j].Y))
+                        {
+                            scoresCount++;
+                            invader.RemoveAt(j);
+                        }
+                    }
+                }
+                UpdateShots();
                 Console.Clear();
 
                 print.PrintStringPlayerOnPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
                 bulletPosition = spaceship.X + 2;
                 foreach (var shot in shots)
                 {
-                    Visualization.DrawSymbolAtCoordinates(shot.X, shot.Y, shot.C, shot.Color);
+                    if (shot.Y>0 && shot.Y < Console.WindowHeight - 3)
+                    {
+                        Visualization.DrawSymbolAtCoordinates(shot.X, shot.Y, shot.C, shot.Color);
+                    }
+                    
                 }
                 
 
@@ -226,9 +248,10 @@ namespace ConsoleGame
                 }
 
                 print.PrintStringOnPosition(10, 1, "LIVES: " + livesCount, ConsoleColor.White);
-                print.PrintStringOnPosition(20, 1, "SCORES: ", ConsoleColor.White);
+                print.PrintStringOnPosition(20, 1, "SCORES: " +scoresCount, ConsoleColor.White);
                 print.PrintStringOnPosition(30, 1, "TIME: ", ConsoleColor.White);
-                Thread.Sleep((int)(600 - speed));
+                Thread.Sleep(150);
+                //Thread.Sleep((int)(600 - speed));
             }
         }
     }
