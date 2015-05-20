@@ -30,27 +30,11 @@ namespace ConsoleGame
             Console.WriteLine(c);
         }
 
-
-        public static void DrawShots(List<List<int>> shots, char shotSymbol)
+        public static void DrawSymbolAtCoordinates(int shotX, int shotY, char symbol, ConsoleColor color = ConsoleColor.Gray)
         {
-            foreach (List<int> shot in shots)
-            {
-                ConsoleColor shotColor = ConsoleColor.Blue;
-                DrawSymbolAtCoordinates(shot, shotSymbol, shotColor);
-            }
-        }
-        private static void DrawSymbolAtCoordinates(List<int> coordinates, char symbol, ConsoleColor color)
-        {
-            Console.SetCursorPosition(coordinates[0], coordinates[1]);
+            Console.SetCursorPosition(shotX, shotY);
             Console.ForegroundColor = color;
             Console.WriteLine(symbol);
         }
-
-        //public static void DrawSymbolAtCoordinates(int shotX, int shotY, char symbol, ConsoleColor color = ConsoleColor.Gray)
-        //{
-        //    Console.SetCursorPosition(shotX, shotY);
-        //    Console.ForegroundColor = color;
-        //    Console.WriteLine(symbol);
-        //}
     }
 }

@@ -13,45 +13,41 @@ namespace ConsoleGame
         double acceleration = 0.5;
         int playfieldWidth = 50;
         int livesCount = 10;
-        static char shotSymbol = '|';
         static int bulletPosition = 0;
         Visualization print = new Visualization();
-        static List<List<int>> shots = new List<List<int>>();
-
-        //static List<Bullet> bullets = new List<Bullet>();
+        static List<Bullet> shots = new List<Bullet>();
+        
         private static void Shoot()
         {
-            //foreach (var item in bullets)
-            //{
-            //    item.X = bulletPosition;
-            //    item.Y = Console.WindowHeight - 3;
-            //}
-            shots.Add(new List<int>()
+            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
+            shots.Add(bullet);
+            foreach (var shot in shots)
             {
-                bulletPosition,
-                Console.WindowHeight - 3
-            });
+                shot.Y = Console.WindowHeight - 3;
+                shot.X = bulletPosition;
+            }
+
         }
 
         private static void UpdateShots()
         {
             for (int i = 0; i < shots.Count; i++)
             {
-                shots[i][1] = shots[i][1] - 1;
+                shots[i].Y = shots[i].Y - 1;
             }
 
             int index = -1;
 
             for (int i = 0; i < shots.Count; i++)
             {
-                if (shots[i][1] <= 1)
+                if (shots[i].Y <= 1)
                 {
                     index = i;
                     break;
                 }
             }
 
-            if (index != -1) 
+            if (index != -1)
             {
                 shots.RemoveAt(index);
             }
@@ -59,14 +55,14 @@ namespace ConsoleGame
 
         public static bool IsThereACollision(int playerX, int playerY, int enemyX, int enemyY)
         {
-                if (enemyY == playerY && (enemyX == playerX || enemyX == playerX + 1 || enemyX == playerX + 2 || 
-                      enemyX + 1 == playerX || enemyX + 2 == playerX || enemyX + 1 == playerX + 1 ||
-                      enemyX + 2 == playerX + 2 || enemyX + 1 == playerX + 2 || enemyX + 2 == playerX + 1))
-                {
-                    return true;
-                }
-              
-                return false;
+            if (enemyY == playerY && (enemyX == playerX || enemyX == playerX + 1 || enemyX == playerX + 2 ||
+                  enemyX + 1 == playerX || enemyX + 2 == playerX || enemyX + 1 == playerX + 1 ||
+                  enemyX + 2 == playerX + 2 || enemyX + 1 == playerX + 2 || enemyX + 2 == playerX + 1))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void UpdateAttack()
@@ -91,7 +87,7 @@ namespace ConsoleGame
                 // Falling enemies color and shape
                 if (chance < 2)
                 {
-                
+
                     EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green);
                     invader.Add(newInvader);
                 }
@@ -150,7 +146,7 @@ namespace ConsoleGame
                             spaceship.X = spaceship.X - 1;
                             //speed = 550;
                         }
-                        
+
                     }
                     else if (pressedKey.Key == ConsoleKey.RightArrow)
                     {
@@ -164,10 +160,7 @@ namespace ConsoleGame
 
                     if (pressedKey.Key == ConsoleKey.Spacebar)
                     {
-
                         Shoot();
-                        //Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, '|', ConsoleColor.Blue);
-                        //bullets.Add(bullet);
                     }
                 }
                 List<EnemyInvader> newList = new List<EnemyInvader>();
@@ -210,14 +203,13 @@ namespace ConsoleGame
                 Console.Clear();
 
                 print.PrintStringPlayerOnPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
-                bulletPosition = spaceship.X+2;
-                //Visualization.DrawShots(shots, shotSymbol);
-                Visualization.DrawShots(shots, shotSymbol);
-                //for (int i = 0; i < shots.Count; i++)
-                //{
-                //    Visualization.DrawSymbolAtCoordinates(shots[i].X, shots[i].Y, shots[i].C, shots[i].Color);   
-                //}
-               
+                bulletPosition = spaceship.X + 2;
+                foreach (var shot in shots)
+                {
+                    Visualization.DrawSymbolAtCoordinates(shot.X, shot.Y, shot.C, shot.Color);
+                }
+                
+
                 foreach (EnemyInvader unit in invader)
                 {
                     print.PrintStringOnPosition(unit.X, unit.Y, unit.C, unit.Color);
@@ -231,7 +223,7 @@ namespace ConsoleGame
                 print.PrintStringOnPosition(10, 1, "LIVES: " + livesCount, ConsoleColor.White);
                 print.PrintStringOnPosition(20, 1, "SCORES: ", ConsoleColor.White);
                 print.PrintStringOnPosition(30, 1, "TIME: ", ConsoleColor.White);
-                Thread.Sleep((int)(600-speed));
+                Thread.Sleep((int)(600 - speed));
             }
         }
     }
