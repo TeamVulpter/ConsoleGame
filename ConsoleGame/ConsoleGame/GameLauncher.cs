@@ -29,11 +29,14 @@ namespace ConsoleGame
             keyPressed = Console.ReadKey();
             Map map = new Map();
             Attack attack = new Attack();
+            
             if (keyPressed.Key == ConsoleKey.C)
             {
                 Console.Clear();
                 map.CreateTable();
+               
             }
+            
             
             while (true)
             {
@@ -49,7 +52,8 @@ namespace ConsoleGame
                     attack.UpdateAttack();
                 }
                 
-            } 
+            }
+           
             
         }
     }

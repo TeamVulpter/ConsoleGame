@@ -208,7 +208,7 @@ namespace ConsoleGame
                         newList.Add(newInvader);
                     }
                 }
-
+              
                
                 invader = newList;
                 
@@ -250,23 +250,24 @@ namespace ConsoleGame
 
               //This is how I think is easier to draw some kind of a playfield. It is absolutely basic. I am open for Ideas
 
-                for (int i = 0; i < Console.WindowHeight; i++)
-                {
-                    print.PrintStringOnPosition(54, i, "*");
-                }
-                for (int i = 55; i < Console.WindowWidth; i++)
-                {
-                    print.PrintStringOnPosition(i,15,"*");
-                }
+                
                
                 print.PrintStringOnPosition(70, 2, "LIVES: " + livesCount, ConsoleColor.White);
                 print.PrintStringOnPosition(70, 4, "SCORES: " +scoresCount, ConsoleColor.White);
                 print.PrintStringOnPosition(70, 6, "TIMER:", ConsoleColor.White); //I have to learn how to implement the Timer class which is built in in .net.
-
+                ////for (int star = 0; star < Console.WindowHeight; star++)
+                ////{
+                //    print.PrintStringOnPosition(54, Console.WindowHeight-3, "*");
+                ////}
+                ////for (int starHorizontal = 55; starHorizontal < Console.WindowWidth; starHorizontal++)
+                ////{
+                //    print.PrintStringOnPosition(55-3, 15, "*");
+                ////}
                 //print.PrintStringOnPosition();
                 Thread.Sleep(150);
                 //Thread.Sleep((int)(600 - speed));
             }
+            
         }
     }
 }
