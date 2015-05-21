@@ -47,7 +47,7 @@ namespace VulpterInvaders
             int playfieldWidth = 5;
             int livesCount = 5;
             Console.BufferHeight = Console.WindowHeight = 50;
-            Console.BufferWidth = Console.WindowWidth = 50;
+            Console.BufferWidth = Console.WindowWidth = 100;
             Player spaceship = new Player();
             spaceship.x = 5;
             spaceship.y = Console.WindowHeight - 2;

@@ -15,7 +15,7 @@ namespace ConsoleGame
             Console.WriteLine(c);
         }
 
-        public void PrintStringOnPosition(int x, int y, string str, ConsoleColor color = ConsoleColor.Gray)
+        public  void PrintStringOnPosition(int x, int y, string str, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
