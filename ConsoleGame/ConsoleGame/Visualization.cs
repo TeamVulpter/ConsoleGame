@@ -8,14 +8,14 @@ namespace ConsoleGame
 {
     public class Visualization
     {
-        public void PrintOnPosition(int x, int y, char c, ConsoleColor color = ConsoleColor.Gray)
+        public static void PrintOnPosition(int x, int y, char c, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
             Console.WriteLine(c);
         }
 
-        public  void PrintStringOnPosition(int x, int y, string str, ConsoleColor color = ConsoleColor.Gray)
+        public  static void PrintStringAtPosition(int x, int y, string str, ConsoleColor color = ConsoleColor.Gray)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
@@ -23,12 +23,14 @@ namespace ConsoleGame
 
         }
 
-        public void PrintStringPlayerOnPosition(int x, int y, string c, ConsoleColor color = ConsoleColor.Gray)
+        public static void PrintCharAtPosition(int x, int y, char playerSymbol, ConsoleColor color = ConsoleColor.DarkRed)
         {
-            Console.SetCursorPosition(x, y);
+            Console.SetCursorPosition(y, x);
             Console.ForegroundColor = color;
-            Console.WriteLine(c);
+            Console.Write(playerSymbol);
         }
+
+        
 
         public static void DrawSymbolAtCoordinates(int shotX, int shotY, string symbol, ConsoleColor color = ConsoleColor.Gray)
         {

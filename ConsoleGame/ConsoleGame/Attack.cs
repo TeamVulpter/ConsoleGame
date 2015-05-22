@@ -16,7 +16,7 @@ namespace ConsoleGame
         int livesCount = 10;
         int scoresCount = 0;
         static int bulletPosition = 0;
-        Visualization print = new Visualization();
+        //Visualization print = new Visualization();
         static List<Bullet> shots = new List<Bullet>();
         
         private static void Shoot()
@@ -183,12 +183,12 @@ namespace ConsoleGame
                     if(CheckCollision(newInvader.C, spaceship.C, spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
                     {
                         livesCount--;
-                        print.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
+                        Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
                         if (livesCount <= 0)
                         {
 
-                            print.PrintStringOnPosition(8, 10, "GAME OVER", ConsoleColor.Red);
-                            print.PrintStringOnPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
+                            Visualization.PrintStringAtPosition(8, 10, "GAME OVER", ConsoleColor.Red);
+                            Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
                             //Console.Clear();
                             //isCaptured=true;
                             // map.CreateTable();
@@ -226,7 +226,7 @@ namespace ConsoleGame
                 UpdateShots();
                 Console.Clear();
 
-                print.PrintStringPlayerOnPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
+                Visualization.PrintStringAtPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
                 bulletPosition = spaceship.X + 2;
                 foreach (var shot in shots)
                 {
@@ -240,30 +240,30 @@ namespace ConsoleGame
 
                 foreach (EnemyInvader unit in invader)
                 {
-                    print.PrintStringOnPosition(unit.X, unit.Y, unit.C, unit.Color);
+                    Visualization.PrintStringAtPosition(unit.X, unit.Y, unit.C, unit.Color);
                 }
                 if (isHit)
                 {
-                    print.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);// It appears when it's game over
+                    Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);// It appears when it's game over
 
                 }
 
               //This is how I think is easier to draw some kind of a playfield. It is absolutely basic. I am open for Ideas
 
-                
-               
-                print.PrintStringOnPosition(70, 2, "LIVES: " + livesCount, ConsoleColor.White);
-                print.PrintStringOnPosition(70, 4, "SCORES: " +scoresCount, ConsoleColor.White);
-                print.PrintStringOnPosition(70, 6, "TIMER:", ConsoleColor.White); //I have to learn how to implement the Timer class which is built in in .net.
+
+
+                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + livesCount, ConsoleColor.White);
+                Visualization.PrintStringAtPosition(70, 4, "SCORES: " + scoresCount, ConsoleColor.White);
+                Visualization.PrintStringAtPosition(70, 6, "TIMER:", ConsoleColor.White); //I have to learn how to implement the Timer class which is built in in .net.
                 ////for (int star = 0; star < Console.WindowHeight; star++)
                 ////{
-                //    print.PrintStringOnPosition(54, Console.WindowHeight-3, "*");
+                //    Visualization.PrintStringAtPosition(54, Console.WindowHeight-3, "*");
                 ////}
                 ////for (int starHorizontal = 55; starHorizontal < Console.WindowWidth; starHorizontal++)
                 ////{
-                //    print.PrintStringOnPosition(55-3, 15, "*");
+                //    Visualization.PrintStringAtPosition(55-3, 15, "*");
                 ////}
-                //print.PrintStringOnPosition();
+                //print.PrintStringAtPosition();
                 Thread.Sleep(150);
                 //Thread.Sleep((int)(600 - speed));
             }

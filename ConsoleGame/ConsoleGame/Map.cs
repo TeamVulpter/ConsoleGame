@@ -2,121 +2,151 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleGame
 {
     internal class Map
     {
-        private string[,] matrix1 = new string[24, 39]; 
-        private int timer = 60;
-        private int timethingy = 0;
-        private int endcycle = 0;
-        private ConsoleKeyInfo keyprime;
-        private int z;
-        private int p;
-
-        public void CreateTable()
-        {
-            for (int i = 0; i < 24; i++)
-            {
-                for (int j = 0; j < 39; j++)
-                {
-                    matrix1[i, j] = ".";
-                }
-            }
-            z = 1;
-            p = 1;
-            matrix1[z, p] = "@";
-            //###################################################################################
-            for (int i = 0; i < 24; i++)
-            {
-                matrix1[i, 0] = "O";
-                matrix1[i, 38] = "O";
-            }
-            for (int j = 0; j < 39; j++)
-            {
-                matrix1[0, j] = "O";
-                matrix1[23, j] = "O";
-            }
-            PrintTable(matrix1);
-        }
-
-        public void PrintTable(string[,] matrix)
-        {
-            for (int i = 0; i < 24; i++)
-            {
-                for (int j = 0; j < 39; j++)
-                {
-                    Console.Write(matrix[i, j] + " ");
-                }
-                Console.WriteLine();
-            }
-        }
-
         public void UpdateMap()
         {
-            //ConsoleKeyInfo keyprime;
-            keyprime = Console.ReadKey();
-            //###########################
-            if (keyprime.Key == ConsoleKey.DownArrow || keyprime.Key == ConsoleKey.S)
+            int[,] array = new int[40, 40];
+
+            Player player = new Player(40 - 2,  40/2, '@', ConsoleColor.Red);
+
+            DrawField(array);
+
+            while (true)
             {
-                if (z < 24)
+                while (Console.KeyAvailable)
                 {
-                    if (matrix1[z + 1, p] == ".")
+                    ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+
+                    if (pressedKey.Key == ConsoleKey.UpArrow)
                     {
-                        matrix1[z + 1, p] = matrix1[z, p];
-                        matrix1[z, p] = ".";
-                        z++;
-                        Console.Clear();
-                        PrintTable(matrix1);
+                        if (array[player.X - 1, player.Y] != 1)
+                        {
+                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
+                            player.X--;
+                        }
+                    }
+
+                    if (pressedKey.Key == ConsoleKey.DownArrow)
+                    {
+                        if (array[player.X + 1, player.Y] != 1)
+                        {
+                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
+                            player.X++;
+                        }
+                    }
+
+                    if (pressedKey.Key == ConsoleKey.LeftArrow)
+                    {
+                        if (array[player.X, player.Y - 1] != 1)
+                        {
+                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
+                            player.Y--;
+                        }
+                    }
+
+                    if (pressedKey.Key == ConsoleKey.RightArrow)
+                    {
+                        if (array[player.X, player.Y + 1] != 1)
+                        {
+                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
+                            player.Y++;
+                        }
+                    }
+                }
+
+                Visualization.PrintCharAtPosition(player.X, player.Y, player.PlayerSymbol, player.Color);
+
+                Thread.Sleep(50);
+            }
+        }
+
+        public static void DrawField(int[,] array)
+        {
+            Random randomWidthGenerator = new Random();
+            Random randomHeightGenerator = new Random();
+            int randomWidth = randomWidthGenerator.Next(0, 20);
+            int randomHeight = randomHeightGenerator.Next(0, 20);
+
+            int height = array.GetLength(0);
+            int width = array.GetLength(1);
+
+            for (int i = 0; i < height; i++)
+            {
+                array[i, 0] = 1;
+                array[0, i] = 1;
+                array[height - 1, i] = 1;
+                array[i, height - 1] = 1;
+            }
+
+            for (int i = 0; i < height - 6; i++)
+            {
+                //array[i + 3, 3] = 1;
+                array[3, i + 3] = 1;
+                array[6, i + 3] = 1;
+                array[9, i + 3] = 1;
+                array[12, i + 3] = 1;
+                array[15, i + 3] = 1;
+                array[18, i + 3] = 1;
+                array[21, i + 3] = 1;
+                array[24, i + 3] = 1;
+                array[27, i + 3] = 1;
+                array[30, i + 3] = 1;
+                array[33, i + 3] = 1;
+                array[height - 4, i + 3] = 1;
+             
+            }
+
+
+            for (int i = 0; i < height - 6; i++)
+            {
+                array[i + 3, height-1] = 1;
+                array[height / 2 + 1, i + 3] = 1;
+            }
+
+            array[3, 19] = 0;
+            array[6, 19] = 0;
+           
+            for (int row = 0; row < height; row++)
+            {
+                for (int col = 0; col < width; col++)
+                {
+                    if (array[row, col]!=1)
+                    {
+                        array[randomHeight, randomWidth]=3;
                     }
                 }
             }
-            if (keyprime.Key == ConsoleKey.UpArrow || keyprime.Key == ConsoleKey.W)
+
+            Console.ForegroundColor = ConsoleColor.White;
+
+            for (int i = 0; i < height; i++)
             {
-                if (z > 0)
+                for (int j = 0; j < width; j++)
                 {
-                    if (matrix1[z - 1, p] == ".")
+                    if (array[i, j] == 1)
                     {
-                        matrix1[z - 1, p] = matrix1[z, p];
-                        matrix1[z, p] = ".";
-                        z--;
-                        Console.Clear();
-                        PrintTable(matrix1);
+                        Console.Write("#");
+                    }
+                   
+                    else if (array[i, j] == 3)
+                    {
+                        Console.Write("3");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
                     }
                 }
+
+                Console.WriteLine();
             }
-            if (keyprime.Key == ConsoleKey.RightArrow || keyprime.Key == ConsoleKey.D)
-            {
-                if (p < 37)
-                {
-                    if (matrix1[z, p + 1] == ".")
-                    {
-                        matrix1[z, p + 1] = matrix1[z, p];
-                        matrix1[z, p] = ".";
-                        p++;
-                        Console.Clear();
-                        PrintTable(matrix1);
-                    }
-                }
-            }
-            if (keyprime.Key == ConsoleKey.LeftArrow || keyprime.Key == ConsoleKey.A)
-            {
-                if (p > 0)
-                {
-                    if (matrix1[z, p - 1] == ".")
-                    {
-                        matrix1[z, p - 1] = matrix1[z, p];
-                        matrix1[z, p] = ".";
-                        p--;
-                        Console.Clear();
-                        PrintTable(matrix1);
-                    }
-                }
-            }
-            if (keyprime.Key == ConsoleKey.Escape) endcycle++;
-            //########################
+           
         }
     }
 }
