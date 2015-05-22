@@ -10,14 +10,13 @@ namespace ConsoleGame
 {
     internal class Attack
     {
-        double speed = 400.0;
-        double acceleration = 0.5;
-        int playfieldWidth = 50;
-        int livesCount = 10;
-        int scoresCount = 0;
-        static int bulletPosition = 0;
-        //Visualization print = new Visualization();
-        static List<Bullet> shots = new List<Bullet>();
+       private double speed = 400.0;
+       private double acceleration = 0.5;
+       private int playfieldWidth = 50;
+       private int livesCount = 10;
+       private int scoresCount = 0;
+       private static int bulletPosition = 0;
+       private static List<Bullet> shots = new List<Bullet>();
         
         private static void Shoot()
         {
@@ -28,7 +27,6 @@ namespace ConsoleGame
                 shot.Y = Console.WindowHeight - 3;
                 shot.X = bulletPosition;
             }
-
         }
 
         private static void UpdateShots()
@@ -67,7 +65,6 @@ namespace ConsoleGame
                         result = true;
                     }
                 }
-                
             }   
             return result;
         }
@@ -81,8 +78,6 @@ namespace ConsoleGame
             List<EnemyInvader> invader = new List<EnemyInvader>();
             Map map = new Map();
 
-
-
             while (true)
             {
                 speed += acceleration;
@@ -90,9 +85,9 @@ namespace ConsoleGame
                 {
                     speed = 200;
                 }
-                bool isHit = false;
 
                 int chance = randomGenerator.Next(0, 100);
+
                 // Falling enemies color and shape
                 if (chance < 2)
                 {
@@ -170,7 +165,18 @@ namespace ConsoleGame
                         Shoot();
                     }
                 }
+                //List<Bullet> newListBullet = new List<Bullet>();
+                //for (int i = 0; i < shots.Count; i++)
+                //{
 
+                //    Bullet oldBullet = shots[i];
+                //    Bullet newBullet = new Bullet();
+                //    newBullet.X = oldBullet.X;
+                //    newBullet.Y = oldBullet.Y + 1;
+                //    newBullet.C = oldBullet.C;
+                //    newBullet.Color = oldBullet.Color;
+                //}
+                
                 List<EnemyInvader> newList = new List<EnemyInvader>();
                 for (int i = 0; i < invader.Count; i++)
                 {
@@ -184,8 +190,8 @@ namespace ConsoleGame
 
                     if (CheckCollision(newInvader.C, spaceship.C, spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
                     {
-                        newList.Add(newInvader);
                         livesCount--;
+                        newList.Add(newInvader);
                         Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
                         if (livesCount <= 0)
                         {
@@ -221,10 +227,11 @@ namespace ConsoleGame
                     }
                 }
                 UpdateShots();
-                Console.Clear();
 
-                Visualization.PrintStringAtPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
+                Console.Clear();
                 bulletPosition = spaceship.X + 2;
+                Visualization.PrintStringAtPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
+               
                 foreach (var shot in shots)
                 {
                     if (shot.Y>0 && shot.Y < Console.WindowHeight - 3)
@@ -233,34 +240,20 @@ namespace ConsoleGame
                     }
                     
                 }
-                
 
                 foreach (EnemyInvader unit in invader)
                 {
                     Visualization.PrintStringAtPosition(unit.X, unit.Y, unit.C, unit.Color);
                 }
-                if (isHit)
-                {
-                    Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);// It appears when it's game over
 
-                }
-
-              //This is how I think is easier to draw some kind of a playfield. It is absolutely basic. I am open for Ideas
-
-
-
-                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + livesCount, ConsoleColor.White);
+                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', livesCount), ConsoleColor.Red);
                 Visualization.PrintStringAtPosition(70, 4, "SCORES: " + scoresCount, ConsoleColor.White);
                 Visualization.PrintStringAtPosition(70, 6, "TIMER:", ConsoleColor.White); //I have to learn how to implement the Timer class which is built in in .net.
-                //for (int star = 0; star < Console.WindowHeight; star++)
-                //{
-                //Visualization.PrintStringAtPosition(60, Console.WindowHeight - 3, "*");
-                //}
-                //for (int starHorizontal = 55; starHorizontal < Console.WindowWidth; starHorizontal++)
-                //{
-                //Visualization.PrintStringAtPosition(55 - 3, 15, "*");
-                //}
-                
+                Visualization.PrintStringAtPosition(60, 20, new string('*', 40), ConsoleColor.White);
+                for (int i = 1; i < 20; i++)
+                {
+                    Visualization.PrintStringAtPosition(60, i, "*", ConsoleColor.White);
+                }
                 Thread.Sleep(150);
                 //Thread.Sleep((int)(600 - speed));
             }
