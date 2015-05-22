@@ -81,6 +81,8 @@ namespace ConsoleGame
             List<EnemyInvader> invader = new List<EnemyInvader>();
             Map map = new Map();
 
+
+
             while (true)
             {
                 speed += acceleration;
@@ -180,8 +182,9 @@ namespace ConsoleGame
                     newInvader.C = oldInvader.C;
                     newInvader.Color = oldInvader.Color;
 
-                    if(CheckCollision(newInvader.C, spaceship.C, spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
+                    if (CheckCollision(newInvader.C, spaceship.C, spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
                     {
+                        newList.Add(newInvader);
                         livesCount--;
                         Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
                         if (livesCount <= 0)
@@ -199,17 +202,11 @@ namespace ConsoleGame
                         }
                     }
 
-                    
-                    
-                   
-                    
-                    if (newInvader.Y < Console.WindowHeight)
+                    if (newInvader.Y < Console.WindowHeight - 1)
                     {
                         newList.Add(newInvader);
                     }
                 }
-              
-               
                 invader = newList;
                 
                 foreach (Bullet item in shots)
@@ -255,15 +252,15 @@ namespace ConsoleGame
                 Visualization.PrintStringAtPosition(70, 2, "LIVES: " + livesCount, ConsoleColor.White);
                 Visualization.PrintStringAtPosition(70, 4, "SCORES: " + scoresCount, ConsoleColor.White);
                 Visualization.PrintStringAtPosition(70, 6, "TIMER:", ConsoleColor.White); //I have to learn how to implement the Timer class which is built in in .net.
-                ////for (int star = 0; star < Console.WindowHeight; star++)
-                ////{
-                //    Visualization.PrintStringAtPosition(54, Console.WindowHeight-3, "*");
-                ////}
-                ////for (int starHorizontal = 55; starHorizontal < Console.WindowWidth; starHorizontal++)
-                ////{
-                //    Visualization.PrintStringAtPosition(55-3, 15, "*");
-                ////}
-                //print.PrintStringAtPosition();
+                //for (int star = 0; star < Console.WindowHeight; star++)
+                //{
+                //Visualization.PrintStringAtPosition(60, Console.WindowHeight - 3, "*");
+                //}
+                //for (int starHorizontal = 55; starHorizontal < Console.WindowWidth; starHorizontal++)
+                //{
+                //Visualization.PrintStringAtPosition(55 - 3, 15, "*");
+                //}
+                
                 Thread.Sleep(150);
                 //Thread.Sleep((int)(600 - speed));
             }
