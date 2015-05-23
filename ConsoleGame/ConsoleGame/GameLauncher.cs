@@ -26,7 +26,6 @@ namespace ConsoleGame
             Console.BufferWidth = Console.WindowWidth = 100;
 
             keyPressed = Console.ReadKey();
-            Map map = new Map();
             Attack attack = new Attack();
             
             while (true)
@@ -35,7 +34,7 @@ namespace ConsoleGame
                 if (keyPressed.Key == ConsoleKey.C)
                 {
                     Console.Clear();
-                    map.UpdateMap();
+                    Map.UpdateMap();
                 }
 
                 if (keyPressed.Key == ConsoleKey.V)

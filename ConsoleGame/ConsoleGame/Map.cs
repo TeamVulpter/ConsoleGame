@@ -9,7 +9,7 @@ namespace ConsoleGame
 {
     internal class Map
     {
-        public void UpdateMap()
+        public static void UpdateMap()
         {
             int[,] array = new int[40, 40];
 

@@ -20,13 +20,7 @@ namespace ConsoleGame
         
         private static void Shoot()
         {
-            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue);
-            shots.Add(bullet);
-            foreach (var shot in shots)
-            {
-                shot.Y = Console.WindowHeight - 3;
-                shot.X = bulletPosition;
-            }
+            shots.Add(new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue));
         }
 
         private static void UpdateShots()
@@ -72,7 +66,6 @@ namespace ConsoleGame
         public void UpdateAttack()
         {
             PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
-            Bullet bullet = new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue);
             List<Bullet> bullets = new List<Bullet>();
             Random randomGenerator = new Random();
             List<EnemyInvader> invader = new List<EnemyInvader>();
@@ -165,17 +158,7 @@ namespace ConsoleGame
                         Shoot();
                     }
                 }
-                //List<Bullet> newListBullet = new List<Bullet>();
-                //for (int i = 0; i < shots.Count; i++)
-                //{
-
-                //    Bullet oldBullet = shots[i];
-                //    Bullet newBullet = new Bullet();
-                //    newBullet.X = oldBullet.X;
-                //    newBullet.Y = oldBullet.Y + 1;
-                //    newBullet.C = oldBullet.C;
-                //    newBullet.Color = oldBullet.Color;
-                //}
+                
                 
                 List<EnemyInvader> newList = new List<EnemyInvader>();
                 for (int i = 0; i < invader.Count; i++)
@@ -253,6 +236,12 @@ namespace ConsoleGame
                 for (int i = 1; i < 20; i++)
                 {
                     Visualization.PrintStringAtPosition(60, i, "*", ConsoleColor.White);
+                }
+
+                if (scoresCount==10)
+                {
+                    Console.Clear();
+                    Map.UpdateMap();
                 }
                 Thread.Sleep(150);
                 //Thread.Sleep((int)(600 - speed));
