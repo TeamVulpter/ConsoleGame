@@ -5,6 +5,8 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using TimerExample;
+
 
 namespace ConsoleGame
 {
@@ -228,9 +230,9 @@ namespace ConsoleGame
                 {
                     Visualization.PrintStringAtPosition(unit.X, unit.Y, unit.C, unit.Color);
                 }
-
                 Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', livesCount), ConsoleColor.Red);
                 Visualization.PrintStringAtPosition(70, 4, "SCORES: " + scoresCount, ConsoleColor.White);
+                
                 Visualization.PrintStringAtPosition(70, 6, "TIMER:", ConsoleColor.White); //I have to learn how to implement the Timer class which is built in in .net.
                 Visualization.PrintStringAtPosition(60, 20, new string('*', 40), ConsoleColor.White);
                 for (int i = 1; i < 20; i++)
