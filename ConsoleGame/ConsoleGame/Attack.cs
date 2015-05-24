@@ -16,7 +16,7 @@ namespace ConsoleGame
        private double acceleration = 0.5;
        private int playfieldWidth = 50;
        private int livesCount = 10;
-       private int scoresCount = 0;
+       public  static int scoresCount = 0;
        private static int bulletPosition = 0;
        private static List<Bullet> shots = new List<Bullet>();
         
@@ -242,8 +242,10 @@ namespace ConsoleGame
 
                 if (scoresCount==10)
                 {
-                    Console.Clear();
-                    Map.UpdateMap();
+                    //Console.Clear();
+                    Scoreboard.GenerateScoreboard(scoresCount);
+                    //Console.Clear();
+                    //Map.UpdateMap();
                 }
                 Thread.Sleep(150);
                 //Thread.Sleep((int)(600 - speed));
