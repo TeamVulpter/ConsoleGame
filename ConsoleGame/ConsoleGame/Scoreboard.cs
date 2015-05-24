@@ -7,7 +7,6 @@ namespace ConsoleGame
 {
     public class Scoreboard
     {
-        
             public static void GenerateScoreboard(int scoreCount)
             {
                 Console.WriteLine("Enter your name: ");
