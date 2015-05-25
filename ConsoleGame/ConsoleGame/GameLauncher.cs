@@ -10,6 +10,13 @@ namespace ConsoleGame
 {
     internal class GameLauncher
     {
+        private double speed = 400.0;
+        private double acceleration = 0.5;
+        private int playfieldWidth = 50;
+        private int livesCount = 10;
+        public static int scoresCount = 0;
+        private static int bulletPosition = 0;
+        private static List<Bullet> shots = new List<Bullet>();
         public static ConsoleKeyInfo keyPressed;
         static void Main(string[] args)
         {

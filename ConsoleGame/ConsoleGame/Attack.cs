@@ -17,11 +17,14 @@ namespace ConsoleGame
         private int playfieldWidth = 50;
         private int livesCount = 10;
         public static int scoresCount = 0;
-        private static int bulletPosition = 0;
         private static List<Bullet> shots = new List<Bullet>();
+        private static List<EnemyInvader> invader = new List<EnemyInvader>();
+        private static PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
+       
 
         private static void Shoot()
         {
+            int bulletPosition = spaceship.X + 2;
             shots.Add(new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue));
         }
 
@@ -67,10 +70,8 @@ namespace ConsoleGame
 
         public void UpdateAttack()
         {
-            PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
-            List<Bullet> bullets = new List<Bullet>();
             Random randomGenerator = new Random();
-            List<EnemyInvader> invader = new List<EnemyInvader>();
+
             int steps = 0;
             int enemiesPause = 6;
             Map map = new Map();
@@ -83,141 +84,18 @@ namespace ConsoleGame
                     speed = 200;
                 }
 
-                int chance = randomGenerator.Next(0, 100);
-
-                // Falling enemies color and shape
-                if (chance < 2)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green);
-                    invader.Add(newInvader);
-                }
-                else if (chance < 5)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Red);
-
-                    invader.Add(newInvader);
-                }
-                else if (chance < 8)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Blue);
-
-                    invader.Add(newInvader);
-                }
-                else if (chance < 10)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Cyan);
-                    invader.Add(newInvader);
-                }
-                else if (chance < 13)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
-                    invader.Add(newInvader);
-                }
-                else if (chance < 15)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
-                    invader.Add(newInvader);
-
-                }
-                else if (chance < 18)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.DarkBlue);
-                    invader.Add(newInvader);
-                }
-                else if (chance < 20)
-                {
-                    EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.White);
-                    invader.Add(newInvader);
-                }
-
-
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo pressedKey = Console.ReadKey(true);
-                    while (Console.KeyAvailable)
-                    {
-                        Console.ReadKey(true);
-                    }
-                    if (pressedKey.Key == ConsoleKey.LeftArrow)
-                    {
-                        if (spaceship.X - 1 >= 0)
-                        {
-                            spaceship.X = spaceship.X - 1;
-                            //speed = 550;
-                        }
-
-                    }
-                    else if (pressedKey.Key == ConsoleKey.RightArrow)
-                    {
-                        if (spaceship.X + 1 < playfieldWidth)
-                        {
-                            spaceship.X = spaceship.X + 1;
-                            //speed=550;
-                        }
-
-                    }
-
-                    if (pressedKey.Key == ConsoleKey.Spacebar)
-                    {
-                        Shoot();
-                    }
-                }
+                PlayerShipControls();
 
                 if (steps % enemiesPause == 0)
                 {
-                    List<EnemyInvader> newList = new List<EnemyInvader>();
-                    for (int i = 0; i < invader.Count; i++)
-                    {
-
-                        EnemyInvader oldInvader = invader[i];
-                        EnemyInvader newInvader = new EnemyInvader();
-                        newInvader.X = oldInvader.X;
-                        newInvader.Y = oldInvader.Y + 1;
-                        newInvader.C = oldInvader.C;
-                        newInvader.Color = oldInvader.Color;
-
-                        if (CheckCollision(newInvader.C, spaceship.C, spaceship.X, spaceship.Y, newInvader.X, newInvader.Y))
-                        {
-                            livesCount--;
-                            newList.Add(newInvader);
-                            Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
-                            if (livesCount <= 0)
-                            {
-
-                                Visualization.PrintStringAtPosition(8, 10, "GAME OVER", ConsoleColor.Red);
-                                Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
-                                //Console.Clear();
-                                //isCaptured=true;
-                                // map.CreateTable();
-                                // map.UpdateMap();
-                                Console.ReadLine();
-                                Environment.Exit(0);
-                                //return;
-                            }
-                        }
-
-                        if (newInvader.Y < Console.WindowHeight - 1)
-                        {
-                            newList.Add(newInvader);
-                        }
-                    }
-                    invader = newList;
-                }
-                    foreach (Bullet item in shots)
-                    {
-                        for (int j = 0; j < invader.Count; j++)
-                        {
-                            if (CheckCollision(invader[j].C, item.C, item.X, item.Y, invader[j].X, invader[j].Y))
-                            {
-                                scoresCount++;
-                                invader.RemoveAt(j);
-                            }
-                        }
-                  
+                    GenerateEnemies(randomGenerator);
+                    MoveEnemies();
                 }
                 steps++;
+                TakeLivesTillPlayerIsDead();
+                CheckEnemyAndShotsCollision();
+                UpdateShots();
                 Console.Clear();
-                bulletPosition = spaceship.X + 2;
                 Visualization.PrintStringAtPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
 
                 foreach (var shot in shots)
@@ -228,7 +106,7 @@ namespace ConsoleGame
                     }
 
                 }
-                UpdateShots();
+              
 
                 foreach (EnemyInvader unit in invader)
                 {
@@ -254,6 +132,161 @@ namespace ConsoleGame
                 //Thread.Sleep((int)(600 - speed));
             }
 
+        }
+
+        private static void CheckEnemyAndShotsCollision()
+        {
+            for (int i = 0; i < shots.Count; i++)
+            {
+                for (int j = 0; j < invader.Count; j++)
+                {
+                    if (CheckCollision(invader[j].C, shots[i].C, shots[i].X, shots[i].Y, invader[j].X, invader[j].Y))
+                    {
+                        scoresCount++;
+                        if (invader.Count > 1)
+                        {
+                            invader.Remove(invader[j]);
+                        }
+
+                        if (shots.Count > 1)
+                        {
+                            shots.Remove(shots[i]);
+                        }
+
+                    }
+                }
+
+            }
+        }
+
+        private void TakeLivesTillPlayerIsDead()
+        {
+            for (int enemy = 0; enemy < invader.Count; enemy++)
+            {
+                if (CheckCollision(invader[enemy].C, spaceship.C, spaceship.X, spaceship.Y, invader[enemy].X, invader[enemy].Y) || invader[enemy].Y == Console.WindowHeight - 4)
+                {
+                    livesCount--;
+
+                    if (invader.Count > 1)
+                    {
+                        invader.Remove(invader[enemy]);
+                    }
+
+                    Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
+                    if (livesCount <= 0)
+                    {
+
+                        Visualization.PrintStringAtPosition(8, 10, "GAME OVER", ConsoleColor.Red);
+                        Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
+                        Console.ReadLine();
+                        Environment.Exit(0);
+                    }
+                }
+            }
+        }
+
+        private static void MoveEnemies()
+        {
+            List<EnemyInvader> newList = new List<EnemyInvader>();
+            for (int i = 0; i < invader.Count; i++)
+            {
+
+                EnemyInvader oldInvader = invader[i];
+                EnemyInvader newInvader = new EnemyInvader();
+                newInvader.X = oldInvader.X;
+                newInvader.Y = oldInvader.Y + 1;
+                newInvader.C = oldInvader.C;
+                newInvader.Color = oldInvader.Color;
+
+                if (newInvader.Y < Console.WindowHeight - 1)
+                {
+                    newList.Add(newInvader);
+                }
+            }
+            invader = newList;
+        }
+
+        private void PlayerShipControls()
+        {
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+                while (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true);
+                }
+                if (pressedKey.Key == ConsoleKey.LeftArrow)
+                {
+                    if (spaceship.X - 1 >= 0)
+                    {
+                        spaceship.X = spaceship.X - 1;
+                    }
+
+                }
+                else if (pressedKey.Key == ConsoleKey.RightArrow)
+                {
+                    if (spaceship.X + 1 < playfieldWidth)
+                    {
+                        spaceship.X = spaceship.X + 1;
+                        //speed=550;
+                    }
+
+                }
+
+                if (pressedKey.Key == ConsoleKey.Spacebar)
+                {
+                    Shoot();
+                }
+            }
+        }
+
+        private void GenerateEnemies(Random randomGenerator)
+        {
+            int chance = randomGenerator.Next(0, 100);
+
+            if (chance < 2)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green);
+                invader.Add(newInvader);
+            }
+            else if (chance < 5)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Red);
+
+                invader.Add(newInvader);
+            }
+            else if (chance < 8)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Blue);
+
+                invader.Add(newInvader);
+            }
+            else if (chance < 10)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Cyan);
+                invader.Add(newInvader);
+            }
+            else if (chance < 13)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
+                invader.Add(newInvader);
+            }
+            else if (chance < 15)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
+                invader.Add(newInvader);
+
+            }
+            else if (chance < 18)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.DarkBlue);
+                invader.Add(newInvader);
+            }
+            else if (chance < 20)
+            {
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.White);
+                invader.Add(newInvader);
+            }
         }
     }
 }
