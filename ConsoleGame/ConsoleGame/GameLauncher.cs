@@ -22,6 +22,9 @@ namespace ConsoleGame
             //Visualization.PrintStringAtPosition(25, 10, "Welcome to Space Invaders", ConsoleColor.DarkCyan);
             //Visualization.PrintStringAtPosition(29,12, "Press \"V\" to start",ConsoleColor.DarkCyan);
 
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer("../../GameMusic.wav");
+            player.Play();
+
             Console.BufferHeight = Console.WindowHeight = 50;
             Console.BufferWidth = Console.WindowWidth = 100;
 

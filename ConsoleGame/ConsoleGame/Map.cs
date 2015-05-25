@@ -13,7 +13,7 @@ namespace ConsoleGame
         {
             int[,] array = new int[40, 40];
 
-            Player player = new Player(40 - 2,  40/2, '@', ConsoleColor.Red);
+            Player player = new Player(40 - 2, 40 / 2, '@', ConsoleColor.Red);
 
             DrawField(array);
 
@@ -70,8 +70,11 @@ namespace ConsoleGame
         {
             Random randomWidthGenerator = new Random();
             Random randomHeightGenerator = new Random();
-            int randomWidth = randomWidthGenerator.Next(0, 20);
-            int randomHeight = randomHeightGenerator.Next(0, 20);
+            Random randomValue = new Random();
+            Random randomDigit = new Random();
+            Random randomLifeChance = new Random();
+            int scores = 0;
+            int chance = randomLifeChance.Next(1, 100);
 
             int height = array.GetLength(0);
             int width = array.GetLength(1);
@@ -84,42 +87,36 @@ namespace ConsoleGame
                 array[i, height - 1] = 1;
             }
 
-            for (int i = 0; i < height - 6; i++)
+            //draw matrix grid
+            for (int row = 5; row < width - 5; row += 5)
             {
-                //array[i + 3, 3] = 1;
-                array[3, i + 3] = 1;
-                array[6, i + 3] = 1;
-                array[9, i + 3] = 1;
-                array[12, i + 3] = 1;
-                array[15, i + 3] = 1;
-                array[18, i + 3] = 1;
-                array[21, i + 3] = 1;
-                array[24, i + 3] = 1;
-                array[27, i + 3] = 1;
-                array[30, i + 3] = 1;
-                array[33, i + 3] = 1;
-                array[height - 4, i + 3] = 1;
-             
-            }
-
-
-            for (int i = 0; i < height - 6; i++)
-            {
-                array[i + 3, height-1] = 1;
-                array[height / 2 + 1, i + 3] = 1;
-            }
-
-            array[3, 19] = 0;
-            array[6, 19] = 0;
-           
-            for (int row = 0; row < height; row++)
-            {
-                for (int col = 0; col < width; col++)
+                for (int i = 0; i < height; i++)
                 {
-                    if (array[row, col]!=1)
-                    {
-                        array[randomHeight, randomWidth]=3;
-                    }
+                    array[row, i] = 1;
+                }
+            }
+
+
+            //draw doors
+            for (int i = 1; i < height - 1; i++)
+            {
+                int randomHole = randomValue.Next(1, width - 1);
+                if (array[i, randomHole] == 1)
+                {
+                    array[i, randomHole] = 0;
+                }
+            }
+
+            //draw digits
+
+            for (int i = 1; i < height - 1; i++)
+            {
+                int randomCol = randomWidthGenerator.Next(1, width - 1);
+                int random = randomDigit.Next(3, 10);
+                if (array[i, randomCol] == 0)
+                {
+
+                    array[i, randomCol] = random;
                 }
             }
 
@@ -133,10 +130,15 @@ namespace ConsoleGame
                     {
                         Console.Write("#");
                     }
-                   
-                    else if (array[i, j] == 3)
+
+                    else if (array[i, j] >= 3 && array[i, j] <= 8)
                     {
-                        Console.Write("3");
+                        Console.Write(array[i, j]);
+                        
+                    }
+                    else if (array[i, j] == 9 && chance < 30)
+                    {
+                        Console.Write('\u2665');
                     }
                     else
                     {
@@ -146,7 +148,7 @@ namespace ConsoleGame
 
                 Console.WriteLine();
             }
-           
+
         }
     }
 }
