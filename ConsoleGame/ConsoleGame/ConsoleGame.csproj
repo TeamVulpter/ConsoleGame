@@ -53,6 +53,7 @@
     <Compile Include="PlayerShip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scoreboard.cs" />
+    <Compile Include="Shooting.cs" />
     <Compile Include="Visualization.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -20,37 +20,6 @@ namespace ConsoleGame
         private static List<Bullet> shots = new List<Bullet>();
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
         private static PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
-       
-
-        private static void Shoot()
-        {
-            int bulletPosition = spaceship.X + 2;
-            shots.Add(new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue));
-        }
-
-        private static void UpdateShots()
-        {
-            for (int i = 0; i < shots.Count; i++)
-            {
-                shots[i].Y = shots[i].Y - 1;
-            }
-
-            int index = -1;
-
-            for (int i = 0; i < shots.Count; i++)
-            {
-                if (shots[i].Y <= 1)
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index != -1)
-            {
-                shots.RemoveAt(index);
-            }
-        }
 
         public static bool CheckCollision(string invader, string spaceship, int spaceshipX, int spaceshipY, int invaderX, int invaderY)
         {
@@ -94,7 +63,7 @@ namespace ConsoleGame
                 steps++;
                 TakeLivesTillPlayerIsDead();
                 CheckEnemyAndShotsCollision();
-                UpdateShots();
+                Shooting.UpdateShots(shots);
                 Console.Clear();
                 Visualization.PrintStringAtPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
 
@@ -235,7 +204,7 @@ namespace ConsoleGame
 
                 if (pressedKey.Key == ConsoleKey.Spacebar)
                 {
-                    Shoot();
+                    Shooting.Shoot(spaceship, shots);
                 }
             }
         }
