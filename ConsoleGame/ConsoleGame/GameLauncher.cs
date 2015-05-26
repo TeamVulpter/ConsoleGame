@@ -22,6 +22,8 @@ namespace ConsoleGame
             ////Writing some welcome text. Remove it if you don't like it :)
             //Visualization.PrintStringAtPosition(25, 10, "Welcome to Space Invaders", ConsoleColor.DarkCyan);
             //Visualization.PrintStringAtPosition(29, 12, "Press \"V\" to start", ConsoleColor.DarkCyan);
+            Console.BufferHeight = Console.WindowHeight = 50;
+            Console.BufferWidth = Console.WindowWidth = 100;
             StreamReader reader = new StreamReader(@"../../intro.txt");
             using (reader)
             {
@@ -38,8 +40,7 @@ namespace ConsoleGame
             musicPlayer.PlayLooping();
             //Console.WriteLine(Map.score);
            
-            Console.BufferHeight = Console.WindowHeight = 50;
-            Console.BufferWidth = Console.WindowWidth = 100;
+           
 
             keyPressed = Console.ReadKey();
 
