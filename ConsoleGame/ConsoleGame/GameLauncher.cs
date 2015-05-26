@@ -19,31 +19,31 @@ namespace ConsoleGame
             ////    Visualization.PrintStringAtPosition(i,5,"_",ConsoleColor.White);
             ////}
             ////Writing some welcome text. Remove it if you don't like it :)
-            //Visualization.PrintStringAtPosition(25, 10, "Welcome to Space Invaders", ConsoleColor.DarkCyan);
-            //Visualization.PrintStringAtPosition(29,12, "Press \"V\" to start",ConsoleColor.DarkCyan);
+            Visualization.PrintStringAtPosition(25, 10, "Welcome to Space Invaders", ConsoleColor.DarkCyan);
+            Visualization.PrintStringAtPosition(29, 12, "Press \"V\" to start", ConsoleColor.DarkCyan);
 
-            System.Media.SoundPlayer player = new System.Media.SoundPlayer("../../GameMusic.wav");
-            player.Play();
-
+            System.Media.SoundPlayer musicPlayer = new System.Media.SoundPlayer("../../GameMusic.wav");
+            musicPlayer.Play();
+           
             Console.BufferHeight = Console.WindowHeight = 50;
             Console.BufferWidth = Console.WindowWidth = 100;
 
             keyPressed = Console.ReadKey();
-            Attack attack = new Attack();
-            
+
             while (true)
             {
 
-                if (keyPressed.Key == ConsoleKey.C)
+                if (keyPressed.Key == ConsoleKey.V)
                 {
+                    musicPlayer.Stop();
                     Console.Clear();
                     Map.UpdateMap();
                 }
 
-                if (keyPressed.Key == ConsoleKey.V)
-                {
-                    attack.UpdateAttack();
-                }
+                //if (keyPressed.Key == ConsoleKey.V)
+                //{
+                //    Attack.UpdateAttack();
+                //}
                 
             }
            

@@ -9,13 +9,13 @@ namespace ConsoleGame
 {
     internal class Map
     {
+        public static int score = 0;
+        public static Player player = new Player(40 - 2, 40 / 2, '@', ConsoleColor.Red);
         public static void UpdateMap()
         {
-            int[,] array = new int[40, 40];
+            int[,] matrix = new int[40, 40];
 
-            Player player = new Player(40 - 2, 40 / 2, '@', ConsoleColor.Red);
-
-            DrawField(array);
+            DrawField(matrix);
 
             while (true)
             {
@@ -25,8 +25,10 @@ namespace ConsoleGame
 
                     if (pressedKey.Key == ConsoleKey.UpArrow)
                     {
-                        if (array[player.X - 1, player.Y] != 1)
+                        if (matrix[player.X - 1, player.Y] != 1)
                         {
+                            AddScores(player.X - 1, player.Y, matrix);
+
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.X--;
                         }
@@ -34,8 +36,9 @@ namespace ConsoleGame
 
                     if (pressedKey.Key == ConsoleKey.DownArrow)
                     {
-                        if (array[player.X + 1, player.Y] != 1)
+                        if (matrix[player.X + 1, player.Y] != 1)
                         {
+                            AddScores(player.X + 1, player.Y, matrix);
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.X++;
                         }
@@ -43,8 +46,9 @@ namespace ConsoleGame
 
                     if (pressedKey.Key == ConsoleKey.LeftArrow)
                     {
-                        if (array[player.X, player.Y - 1] != 1)
+                        if (matrix[player.X, player.Y - 1] != 1)
                         {
+                            AddScores(player.X, player.Y - 1, matrix);
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.Y--;
                         }
@@ -52,8 +56,9 @@ namespace ConsoleGame
 
                     if (pressedKey.Key == ConsoleKey.RightArrow)
                     {
-                        if (array[player.X, player.Y + 1] != 1)
+                        if (matrix[player.X, player.Y + 1] != 1)
                         {
+                            AddScores(player.X, player.Y + 1, matrix);
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.Y++;
                         }
@@ -61,8 +66,20 @@ namespace ConsoleGame
                 }
 
                 Visualization.PrintCharAtPosition(player.X, player.Y, player.PlayerSymbol, player.Color);
+                Visualization.PrintStringAtPosition(70, 4, "SCORES: " + score, ConsoleColor.White);
 
                 Thread.Sleep(50);
+            }
+        }
+
+        public static void AddScores(int playerX, int playerY, int [,] matrix)
+        {
+            for (int i = 3; i < 9; i++)
+            {
+                if (matrix[playerX, playerY] == i)
+                {
+                    score+=i;
+                }
             }
         }
 
@@ -117,6 +134,14 @@ namespace ConsoleGame
                 {
 
                     array[i, randomCol] = random;
+                }
+            }
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    
                 }
             }
 

@@ -12,10 +12,10 @@ namespace ConsoleGame
 {
     internal class Attack
     {
-        private double speed = 400.0;
-        private double acceleration = 0.5;
-        private int playfieldWidth = 50;
-        private int livesCount = 10;
+        private static double speed = 400.0;
+        private static double acceleration = 0.5;
+        private static int playfieldWidth = 50;
+        private static int livesCount = 10;
         public static int scoresCount = 0;
         private static List<Bullet> shots = new List<Bullet>();
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
@@ -37,7 +37,7 @@ namespace ConsoleGame
             return result;
         }
 
-        public void UpdateAttack()
+        public static void UpdateAttack()
         {
             Random randomGenerator = new Random();
 
@@ -128,7 +128,7 @@ namespace ConsoleGame
             }
         }
 
-        private void TakeLivesTillPlayerIsDead()
+        private static void TakeLivesTillPlayerIsDead()
         {
             for (int enemy = 0; enemy < invader.Count; enemy++)
             {
@@ -175,7 +175,7 @@ namespace ConsoleGame
             invader = newList;
         }
 
-        private void PlayerShipControls()
+        private static void PlayerShipControls()
         {
             if (Console.KeyAvailable)
             {
@@ -209,7 +209,7 @@ namespace ConsoleGame
             }
         }
 
-        private void GenerateEnemies(Random randomGenerator)
+        private static void GenerateEnemies(Random randomGenerator)
         {
             int chance = randomGenerator.Next(0, 100);
 
