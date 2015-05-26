@@ -33,6 +33,7 @@ namespace ConsoleGame
                 }
 
                 File.WriteAllLines("../../Scoreboard.txt", orderedScores);
+                
             }
     }
 }

@@ -9,23 +9,23 @@ namespace ConsoleGame
 {
     internal class Map
     {
-        public static int score = 0;
-        public static int life = 0;
+        //public static int score = 0;
+        //public static int life = Life.lifeCount;
         public static Player player = new Player(40 - 2, 40 / 2, '@', ConsoleColor.Red);
 
-        public static int Score
-        {
-            get { return score; }
-            set { score = value; }
+        //public static int Score
+        //{
+        //    get { return score; }
+        //    set { score = value; }
 
-        }
+        //}
 
-         public static int Life
-        {
-            get { return life; }
-            set { life = value; }
+        // public static int Life
+        //{
+        //    get { return life; }
+        //    set { life = value; }
 
-        }
+        //}
 
         
         public static void UpdateMap()
@@ -124,8 +124,8 @@ namespace ConsoleGame
                 }
 
                 Visualization.PrintCharAtPosition(player.X, player.Y, player.PlayerSymbol, player.Color);
-                Visualization.PrintStringAtPosition(70, 4, "SCORES: " + score, ConsoleColor.White);
-                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', life), ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(70, 4, "SCORES: " + Score.ScoreCount, ConsoleColor.White);
+                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', Life.LifeCount), ConsoleColor.Red);
 
 
                 Thread.Sleep(50);
@@ -138,7 +138,7 @@ namespace ConsoleGame
             {
                 if (matrix[playerX, playerY] == i)
                 {
-                    score+=i;
+                    Score.ScoreCount+=i;
                    
                 }
             }
@@ -149,7 +149,8 @@ namespace ConsoleGame
            
                 if (matrix[playerX, playerY] == 7)
                 {
-                    life += 1;
+                    Life.LifeCount += 1;
+                    //life += 1;
                 }
         }
 

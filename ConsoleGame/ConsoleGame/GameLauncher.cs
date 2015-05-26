@@ -38,7 +38,6 @@ namespace ConsoleGame
             }
             System.Media.SoundPlayer musicPlayer = new System.Media.SoundPlayer("../../GameMusic.wav");
             musicPlayer.PlayLooping();
-            //Console.WriteLine(Map.score);
            
            
 
@@ -54,13 +53,11 @@ namespace ConsoleGame
                     Map.UpdateMap();
                 }
 
-                //if (keyPressed.Key == ConsoleKey.V)
+                //if (keyPressed.Key == ConsoleKey.C)
                 //{
                 //    Attack.UpdateAttack();
                 //}
-                
             }
-           
         }
     }
 }

@@ -12,14 +12,18 @@ namespace ConsoleGame
 {
     internal class Attack
     {
-        private static double speed = 400.0;
-        private static double acceleration = 0.5;
-        private static int playfieldWidth = 50;
-        private static int livesCount = Map.life + 2;
-        public static int scoresCount = Map.score;
+        //private static double speed = 400.0;
+        //private static double acceleration = 0.5;
+        private const int playfieldWidth = 50;
+        private static int livesCount = Life.LifeCount + 2;
+        private static int scoresCount = Score.ScoreCount;
         private static List<Bullet> shots = new List<Bullet>();
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
         private static PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
+        private static int steps = 0;
+        private static int enemiesPause = 6;
+        private static Map map = new Map();
+        private static Random randomGenerator = new Random();
 
         public static bool CheckCollision(string invader, string spaceship, int spaceshipX, int spaceshipY, int invaderX, int invaderY)
         {
@@ -30,6 +34,7 @@ namespace ConsoleGame
                 {
                     if (spaceshipY == invaderY && spaceshipX + j == invaderX + i)
                     {
+                        
                         result = true;
                     }
                 }
@@ -39,19 +44,14 @@ namespace ConsoleGame
 
         public static void UpdateAttack()
         {
-            Random randomGenerator = new Random();
-
-            int steps = 0;
-            int enemiesPause = 6;
-            Map map = new Map();
-
+           
             while (true)
             {
-                speed += acceleration;
-                if (speed > 200)
-                {
-                    speed = 200;
-                }
+                //speed += acceleration;
+                //if (speed > 200)
+                //{
+                //    speed = 200;
+                //}
 
                 PlayerShipControls();
 
@@ -124,6 +124,10 @@ namespace ConsoleGame
                         {
                             invader.Remove(invader[j]);
                         }
+                        else
+                        {
+                            invader.Add(new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green));
+                        }
 
                         if (shots.Count > 1)
                         {
@@ -152,13 +156,20 @@ namespace ConsoleGame
                     Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
                     if (livesCount <= 0)
                     {
-
-                       
                         Console.Clear();
                         Visualization.PrintStringAtPosition(8, 10, "GAME OVER! YOU LOSE!", ConsoleColor.Red);
                         Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
-                        Console.ReadLine();
-                        Environment.Exit(0);
+                        if (Console.KeyAvailable)
+                        {
+                            ConsoleKeyInfo pressedKey = Console.ReadKey(true);
+                            if (pressedKey.Key==ConsoleKey.Enter)
+                            {
+                                 //Console.ReadLine();
+                                Environment.Exit(0);
+                            }
+                        }
+                        //Console.ReadLine();
+                        //Environment.Exit(0);
                     }
                 }
             }
@@ -207,7 +218,6 @@ namespace ConsoleGame
                     if (spaceship.X + 1 < playfieldWidth)
                     {
                         spaceship.X = spaceship.X + 1;
-                        //speed=550;
                     }
 
                 }

@@ -8,12 +8,12 @@ namespace ConsoleGame
 {
     public class Life
     {
-    //    public int lifeCount = 0;
-    //    public int LifeCount
-    //    {
-    //        get { return lifeCount; }
-    //        set { lifeCount = value; }
+        private static int lifeCount = 0;
+        public static int LifeCount
+        {
+            get { return lifeCount; }
+            set { lifeCount = value; }
 
-    //    }
+        }
     }
 }
