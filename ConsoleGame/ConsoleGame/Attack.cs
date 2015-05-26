@@ -15,7 +15,7 @@ namespace ConsoleGame
         //private static double speed = 400.0;
         //private static double acceleration = 0.5;
         private const int playfieldWidth = 50;
-        private static int livesCount = Life.LifeCount + 2;
+        private static int livesCount = Life.LifeCount;
         private static int scoresCount = Score.ScoreCount;
         private static List<Bullet> shots = new List<Bullet>();
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
@@ -98,8 +98,7 @@ namespace ConsoleGame
                     
                     Visualization.PrintStringAtPosition(8, 10, "GAME OVER! YOU WIN!", ConsoleColor.Red);
                     Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
-                   
-                    Console.ReadLine();
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Environment.Exit(0);
                   
                 }
@@ -159,17 +158,8 @@ namespace ConsoleGame
                         Console.Clear();
                         Visualization.PrintStringAtPosition(8, 10, "GAME OVER! YOU LOSE!", ConsoleColor.Red);
                         Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
-                        if (Console.KeyAvailable)
-                        {
-                            ConsoleKeyInfo pressedKey = Console.ReadKey(true);
-                            if (pressedKey.Key==ConsoleKey.Enter)
-                            {
-                                 //Console.ReadLine();
-                                Environment.Exit(0);
-                            }
-                        }
-                        //Console.ReadLine();
-                        //Environment.Exit(0);
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Environment.Exit(0);
                     }
                 }
             }
@@ -246,7 +236,7 @@ namespace ConsoleGame
             }
             else if (chance < 8)
             {
-                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Blue);
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "//|\\\\", ConsoleColor.Green);
 
                 invader.Add(newInvader);
             }
@@ -257,7 +247,7 @@ namespace ConsoleGame
             }
             else if (chance < 13)
             {
-                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Magenta);
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "//|\\\\", ConsoleColor.Magenta);
                 invader.Add(newInvader);
             }
             else if (chance < 15)
@@ -268,7 +258,7 @@ namespace ConsoleGame
             }
             else if (chance < 18)
             {
-                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.DarkBlue);
+                EnemyInvader newInvader = new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "//|\\\\", ConsoleColor.Cyan);
                 invader.Add(newInvader);
             }
             else if (chance < 20)

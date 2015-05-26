@@ -8,7 +8,7 @@ namespace ConsoleGame
 {
     public class Life
     {
-        private static int lifeCount = 0;
+        private static int lifeCount = 2;
         public static int LifeCount
         {
             get { return lifeCount; }
