@@ -12,6 +12,22 @@ namespace ConsoleGame
         public static int score = 0;
         public static int life = 0;
         public static Player player = new Player(40 - 2, 40 / 2, '@', ConsoleColor.Red);
+
+        public static int Score
+        {
+            get { return score; }
+            set { score = value; }
+
+        }
+
+         public static int Life
+        {
+            get { return life; }
+            set { life = value; }
+
+        }
+
+        
         public static void UpdateMap()
         {
             int[,] matrix = new int[40, 40];
@@ -144,7 +160,6 @@ namespace ConsoleGame
             Random randomValue = new Random();
             Random randomDigit = new Random();
             Random randomLifeChance = new Random();
-            int scores = 0;
             int chance = randomLifeChance.Next(1, 100);
 
             int height = matrix.GetLength(0);

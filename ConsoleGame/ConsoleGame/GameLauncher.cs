@@ -23,7 +23,8 @@ namespace ConsoleGame
             Visualization.PrintStringAtPosition(29, 12, "Press \"V\" to start", ConsoleColor.DarkCyan);
 
             System.Media.SoundPlayer musicPlayer = new System.Media.SoundPlayer("../../GameMusic.wav");
-            musicPlayer.Play();
+            musicPlayer.PlayLooping();
+            //Console.WriteLine(Map.score);
            
             Console.BufferHeight = Console.WindowHeight = 50;
             Console.BufferWidth = Console.WindowWidth = 100;

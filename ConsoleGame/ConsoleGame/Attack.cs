@@ -15,8 +15,8 @@ namespace ConsoleGame
         private static double speed = 400.0;
         private static double acceleration = 0.5;
         private static int playfieldWidth = 50;
-        private static int livesCount = 1;
-        public static int scoresCount = 0;
+        private static int livesCount = Map.life + 2;
+        public static int scoresCount = Map.score;
         private static List<Bullet> shots = new List<Bullet>();
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
         private static PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
@@ -120,10 +120,10 @@ namespace ConsoleGame
                     if (CheckCollision(invader[j].C, shots[i].C, shots[i].X, shots[i].Y, invader[j].X, invader[j].Y))
                     {
                         scoresCount++;
-                        //if (invader.Count > 1)
-                        //{
+                        if (invader.Count > 1)
+                        {
                             invader.Remove(invader[j]);
-                        //}
+                        }
 
                         if (shots.Count > 1)
                         {
