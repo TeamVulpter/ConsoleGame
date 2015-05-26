@@ -10,6 +10,7 @@ namespace ConsoleGame
     internal class Map
     {
         public static int score = 0;
+        public static int life = 0;
         public static Player player = new Player(40 - 2, 40 / 2, '@', ConsoleColor.Red);
         public static void UpdateMap()
         {
@@ -27,46 +28,93 @@ namespace ConsoleGame
                     {
                         if (matrix[player.X - 1, player.Y] != 1)
                         {
-                            AddScores(player.X - 1, player.Y, matrix);
-
+                            if (matrix[player.X - 1, player.Y] > 1 && matrix[player.X - 1, player.Y] != 8)
+                            {
+                                AddScores(player.X - 1, player.Y, matrix);
+                                AddLife(player.X - 1, player.Y, matrix);
+                                matrix[player.X - 1, player.Y] = 0;
+                            }
+                            else if (matrix[player.X - 1, player.Y] == 8)
+                            {
+                                Attack.UpdateAttack();
+                            }
+                            
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.X--;
+                            //matrix[player.X - 1, player.Y] = 0;
                         }
+                        
                     }
 
                     if (pressedKey.Key == ConsoleKey.DownArrow)
                     {
                         if (matrix[player.X + 1, player.Y] != 1)
                         {
-                            AddScores(player.X + 1, player.Y, matrix);
+                            if (matrix[player.X + 1, player.Y] > 1 && matrix[player.X + 1, player.Y] != 8)
+                            {
+                                AddScores(player.X + 1, player.Y, matrix);
+                                AddLife(player.X + 1, player.Y, matrix);
+                                matrix[player.X + 1, player.Y] = 0;
+                            }
+                            else if (matrix[player.X + 1, player.Y] == 8)
+                            {
+                                Attack.UpdateAttack();
+                            }
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.X++;
+                            //matrix[player.X + 1, player.Y] = 0;
                         }
+                      
                     }
 
                     if (pressedKey.Key == ConsoleKey.LeftArrow)
                     {
                         if (matrix[player.X, player.Y - 1] != 1)
                         {
-                            AddScores(player.X, player.Y - 1, matrix);
+                            if (matrix[player.X, player.Y - 1] > 1 && matrix[player.X, player.Y - 1] != 8)
+                            {
+                                AddScores(player.X, player.Y - 1, matrix);
+                                AddLife(player.X, player.Y - 1, matrix);
+                                matrix[player.X, player.Y - 1] = 0;
+                            }
+                            else if (matrix[player.X, player.Y - 1] == 8)
+                            {
+                                Attack.UpdateAttack();
+                            }
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.Y--;
+                            //matrix[player.X, player.Y - 1] = 0;
                         }
+
+                      
                     }
 
                     if (pressedKey.Key == ConsoleKey.RightArrow)
                     {
                         if (matrix[player.X, player.Y + 1] != 1)
                         {
-                            AddScores(player.X, player.Y + 1, matrix);
+                            if (matrix[player.X, player.Y + 1] > 1 && matrix[player.X, player.Y + 1]!=8)
+                            {
+                                AddScores(player.X, player.Y + 1, matrix);
+                                AddLife(player.X, player.Y + 1, matrix);
+                                matrix[player.X, player.Y + 1] = 0;
+                            }
+                            else if (matrix[player.X, player.Y + 1]== 8)
+                            {
+                                Attack.UpdateAttack();
+                            }
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.Y++;
+                            //matrix[player.X, player.Y - 1] = 0;
                         }
+                       
                     }
                 }
 
                 Visualization.PrintCharAtPosition(player.X, player.Y, player.PlayerSymbol, player.Color);
                 Visualization.PrintStringAtPosition(70, 4, "SCORES: " + score, ConsoleColor.White);
+                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', life), ConsoleColor.Red);
+
 
                 Thread.Sleep(50);
             }
@@ -74,16 +122,28 @@ namespace ConsoleGame
 
         public static void AddScores(int playerX, int playerY, int [,] matrix)
         {
-            for (int i = 3; i < 9; i++)
+            for (int i = 3; i < 7; i++)
             {
                 if (matrix[playerX, playerY] == i)
                 {
                     score+=i;
+                   
                 }
             }
+          
+        }
+        public static void AddLife(int playerX, int playerY, int[,] matrix)
+        {
+           
+                if (matrix[playerX, playerY] == 7)
+                {
+                    life += 1;
+                }
+             
+            
         }
 
-        public static void DrawField(int[,] array)
+        public static void DrawField(int[,] matrix)
         {
             Random randomWidthGenerator = new Random();
             Random randomHeightGenerator = new Random();
@@ -93,23 +153,24 @@ namespace ConsoleGame
             int scores = 0;
             int chance = randomLifeChance.Next(1, 100);
 
-            int height = array.GetLength(0);
-            int width = array.GetLength(1);
+            int height = matrix.GetLength(0);
+            int width = matrix.GetLength(1);
 
             for (int i = 0; i < height; i++)
             {
-                array[i, 0] = 1;
-                array[0, i] = 1;
-                array[height - 1, i] = 1;
-                array[i, height - 1] = 1;
+                matrix[i, 0] = 1;
+                matrix[0, i] = 1;
+                matrix[height - 1, i] = 1;
+                matrix[i, height - 1] = 1;
             }
+            matrix[1, 1] = 8;
 
             //draw matrix grid
             for (int row = 5; row < width - 5; row += 5)
             {
                 for (int i = 0; i < height; i++)
                 {
-                    array[row, i] = 1;
+                    matrix[row, i] = 1;
                 }
             }
 
@@ -118,9 +179,9 @@ namespace ConsoleGame
             for (int i = 1; i < height - 1; i++)
             {
                 int randomHole = randomValue.Next(1, width - 1);
-                if (array[i, randomHole] == 1)
+                if (matrix[i, randomHole] == 1)
                 {
-                    array[i, randomHole] = 0;
+                    matrix[i, randomHole] = 0;
                 }
             }
 
@@ -129,41 +190,40 @@ namespace ConsoleGame
             for (int i = 1; i < height - 1; i++)
             {
                 int randomCol = randomWidthGenerator.Next(1, width - 1);
-                int random = randomDigit.Next(3, 10);
-                if (array[i, randomCol] == 0)
+                int random = randomDigit.Next(3, 9);
+                if (matrix[i, randomCol] == 0)
                 {
 
-                    array[i, randomCol] = random;
+                    matrix[i, randomCol] = random;
                 }
             }
+
+
+            //Console.ForegroundColor = ConsoleColor.White;
 
             for (int i = 0; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    
-                }
-            }
-
-            Console.ForegroundColor = ConsoleColor.White;
-
-            for (int i = 0; i < height; i++)
-            {
-                for (int j = 0; j < width; j++)
-                {
-                    if (array[i, j] == 1)
+                    if (matrix[i, j] == 1)
                     {
-                        Console.Write("#");
+                        Visualization.PrintCharAtPosition(i, j, '#', ConsoleColor.White);
                     }
 
-                    else if (array[i, j] >= 3 && array[i, j] <= 8)
+                    else if (matrix[i, j] >= 3 && matrix[i, j] <= 6)
                     {
-                        Console.Write(array[i, j]);
+                        Visualization.PrintCharAtPosition(i, j, (char)(matrix[i, j]+48), ConsoleColor.Blue);
                         
                     }
-                    else if (array[i, j] == 9 && chance < 30)
+                    else if (matrix[i, j] == 7 && chance > 20)
                     {
-                        Console.Write('\u2665');
+                        Visualization.PrintCharAtPosition(i, j, '\u2665', ConsoleColor.Red);
+                       
+                    }
+                    else if (matrix[i, j] == 8 && chance > 10)
+                    {
+                        Visualization.PrintCharAtPosition(i, j, '\u0065', ConsoleColor.Green);
+                      
                     }
                     else
                     {
