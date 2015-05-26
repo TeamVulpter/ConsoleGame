@@ -41,7 +41,6 @@ namespace ConsoleGame
                             
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.X--;
-                            //matrix[player.X - 1, player.Y] = 0;
                         }
                         
                     }
@@ -62,7 +61,6 @@ namespace ConsoleGame
                             }
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.X++;
-                            //matrix[player.X + 1, player.Y] = 0;
                         }
                       
                     }
@@ -83,7 +81,6 @@ namespace ConsoleGame
                             }
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.Y--;
-                            //matrix[player.X, player.Y - 1] = 0;
                         }
 
                       
@@ -105,7 +102,6 @@ namespace ConsoleGame
                             }
                             Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
                             player.Y++;
-                            //matrix[player.X, player.Y - 1] = 0;
                         }
                        
                     }
@@ -139,8 +135,6 @@ namespace ConsoleGame
                 {
                     life += 1;
                 }
-             
-            
         }
 
         public static void DrawField(int[,] matrix)
@@ -181,7 +175,10 @@ namespace ConsoleGame
                 int randomHole = randomValue.Next(1, width - 1);
                 if (matrix[i, randomHole] == 1)
                 {
-                    matrix[i, randomHole] = 0;
+                    if (matrix[i, randomHole] != 8)
+                    {
+                        matrix[i, randomHole] = 0;
+                    }
                 }
             }
 
@@ -220,7 +217,7 @@ namespace ConsoleGame
                         Visualization.PrintCharAtPosition(i, j, '\u2665', ConsoleColor.Red);
                        
                     }
-                    else if (matrix[i, j] == 8 && chance > 10)
+                    else if (matrix[i, j] == 8 )
                     {
                         Visualization.PrintCharAtPosition(i, j, '\u0065', ConsoleColor.Green);
                       

@@ -91,13 +91,17 @@ namespace ConsoleGame
                     Visualization.PrintStringAtPosition(60, i, "*", ConsoleColor.White);
                 }
 
-                if (scoresCount == 10)
+                if (scoresCount == 200)
                 {
                     //Scoreboard.GenerateScoreboard(scoresCount);
                     Console.Clear();
-                    Map.UpdateMap();
+                    Console.WriteLine("You won!");
+                    Console.ReadLine();
+                    Thread.Sleep(0);
                 }
+               
                 Thread.Sleep(150);
+               
                 //Thread.Sleep((int)(600 - speed));
             }
 
@@ -112,10 +116,10 @@ namespace ConsoleGame
                     if (CheckCollision(invader[j].C, shots[i].C, shots[i].X, shots[i].Y, invader[j].X, invader[j].Y))
                     {
                         scoresCount++;
-                        if (invader.Count > 1)
-                        {
+                        //if (invader.Count > 1)
+                        //{
                             invader.Remove(invader[j]);
-                        }
+                        //}
 
                         if (shots.Count > 1)
                         {
