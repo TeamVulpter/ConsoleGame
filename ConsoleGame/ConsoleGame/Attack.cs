@@ -15,7 +15,7 @@ namespace ConsoleGame
         private static double speed = 400.0;
         private static double acceleration = 0.5;
         private static int playfieldWidth = 50;
-        private static int livesCount = 10;
+        private static int livesCount = 1;
         public static int scoresCount = 0;
         private static List<Bullet> shots = new List<Bullet>();
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
@@ -91,13 +91,17 @@ namespace ConsoleGame
                     Visualization.PrintStringAtPosition(60, i, "*", ConsoleColor.White);
                 }
 
-                if (scoresCount == 200)
+                if (scoresCount == 20)
                 {
                     //Scoreboard.GenerateScoreboard(scoresCount);
                     Console.Clear();
-                    Console.WriteLine("You won!");
+                    
+                    Visualization.PrintStringAtPosition(8, 10, "GAME OVER! YOU WIN!", ConsoleColor.Red);
+                    Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
+                   
                     Console.ReadLine();
-                    Thread.Sleep(0);
+                    Environment.Exit(0);
+                  
                 }
                
                 Thread.Sleep(150);
@@ -149,7 +153,9 @@ namespace ConsoleGame
                     if (livesCount <= 0)
                     {
 
-                        Visualization.PrintStringAtPosition(8, 10, "GAME OVER", ConsoleColor.Red);
+                       
+                        Console.Clear();
+                        Visualization.PrintStringAtPosition(8, 10, "GAME OVER! YOU LOSE!", ConsoleColor.Red);
                         Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
                         Console.ReadLine();
                         Environment.Exit(0);
