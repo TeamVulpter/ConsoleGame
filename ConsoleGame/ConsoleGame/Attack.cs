@@ -21,7 +21,7 @@ namespace ConsoleGame
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
         private static PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
         private static int steps = 0;
-        private static int enemiesPause = 6;
+        private static int enemiesPause = 5;
         private static Map map = new Map();
         private static Random randomGenerator = new Random();
 
@@ -107,7 +107,6 @@ namespace ConsoleGame
                
                 //Thread.Sleep((int)(600 - speed));
             }
-
         }
 
         private static void CheckEnemyAndShotsCollision()
@@ -123,10 +122,10 @@ namespace ConsoleGame
                         {
                             invader.Remove(invader[j]);
                         }
-                        else
-                        {
-                            invader.Add(new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green));
-                        }
+                        //else
+                        //{
+                        //    invader.Add(new EnemyInvader(randomGenerator.Next(0, playfieldWidth), 0, "\\\\|//", ConsoleColor.Green));
+                        //}
 
                         if (shots.Count > 1)
                         {
