@@ -23,9 +23,9 @@ namespace ConsoleGame
 
         }
 
-        public static void PrintCharAtPosition(int x, int y, char playerSymbol, ConsoleColor color = ConsoleColor.DarkRed)
+        public static void PrintCharAtPosition(int y, int x, char playerSymbol, ConsoleColor color = ConsoleColor.DarkRed)
         {
-            Console.SetCursorPosition(y, x);
+            Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
             Console.Write(playerSymbol);
         }

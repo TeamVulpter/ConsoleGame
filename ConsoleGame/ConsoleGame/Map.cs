@@ -9,24 +9,7 @@ namespace ConsoleGame
 {
     internal class Map
     {
-        //public static int score = 0;
-        //public static int life = Life.lifeCount;
         public static Player player = new Player(40 - 2, 40 / 2, '@', ConsoleColor.Red);
-
-        //public static int Score
-        //{
-        //    get { return score; }
-        //    set { score = value; }
-
-        //}
-
-        // public static int Life
-        //{
-        //    get { return life; }
-        //    set { life = value; }
-
-        //}
-
         
         public static void UpdateMap()
         {
@@ -42,61 +25,61 @@ namespace ConsoleGame
 
                     if (pressedKey.Key == ConsoleKey.UpArrow)
                     {
-                        if (matrix[player.X - 1, player.Y] != 1)
+                        if (matrix[player.Y - 1, player.X] != 1)
                         {
-                            if (matrix[player.X - 1, player.Y] > 1 && matrix[player.X - 1, player.Y] != 8)
+                            if (matrix[player.Y - 1, player.X] > 1 && matrix[player.Y - 1, player.X] != 8)
                             {
-                                AddScores(player.X - 1, player.Y, matrix);
-                                AddLife(player.X - 1, player.Y, matrix);
-                                matrix[player.X - 1, player.Y] = 0;
+                                AddScores(player.Y - 1, player.X, matrix);
+                                AddLife(player.Y - 1, player.X, matrix);
+                                matrix[player.Y - 1, player.X] = 0;
                             }
-                            else if (matrix[player.X - 1, player.Y] == 8)
+                            else if (matrix[player.Y - 1, player.X] == 8)
                             {
                                 Attack.UpdateAttack();
                             }
                             
-                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
-                            player.X--;
+                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            player.Y--;
                         }
                         
                     }
 
                     if (pressedKey.Key == ConsoleKey.DownArrow)
                     {
-                        if (matrix[player.X + 1, player.Y] != 1)
+                        if (matrix[player.Y + 1, player.X] != 1)
                         {
-                            if (matrix[player.X + 1, player.Y] > 1 && matrix[player.X + 1, player.Y] != 8)
+                            if (matrix[player.Y + 1, player.X] > 1 && matrix[player.Y + 1, player.X] != 8)
                             {
-                                AddScores(player.X + 1, player.Y, matrix);
-                                AddLife(player.X + 1, player.Y, matrix);
-                                matrix[player.X + 1, player.Y] = 0;
+                                AddScores(player.Y + 1, player.X, matrix);
+                                AddLife(player.Y + 1, player.X, matrix);
+                                matrix[player.Y + 1, player.X] = 0;
                             }
-                            else if (matrix[player.X + 1, player.Y] == 8)
+                            else if (matrix[player.Y + 1, player.X] == 8)
                             {
                                 Attack.UpdateAttack();
                             }
-                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
-                            player.X++;
+                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            player.Y++;
                         }
                       
                     }
 
                     if (pressedKey.Key == ConsoleKey.LeftArrow)
                     {
-                        if (matrix[player.X, player.Y - 1] != 1)
+                        if (matrix[player.Y, player.X - 1] != 1)
                         {
-                            if (matrix[player.X, player.Y - 1] > 1 && matrix[player.X, player.Y - 1] != 8)
+                            if (matrix[player.Y, player.X - 1] > 1 && matrix[player.Y, player.X - 1] != 8)
                             {
-                                AddScores(player.X, player.Y - 1, matrix);
-                                AddLife(player.X, player.Y - 1, matrix);
-                                matrix[player.X, player.Y - 1] = 0;
+                                AddScores(player.Y, player.X - 1, matrix);
+                                AddLife(player.Y, player.X - 1, matrix);
+                                matrix[player.Y, player.X - 1] = 0;
                             }
-                            else if (matrix[player.X, player.Y - 1] == 8)
+                            else if (matrix[player.Y, player.X - 1] == 8)
                             {
                                 Attack.UpdateAttack();
                             }
-                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
-                            player.Y--;
+                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            player.X--;
                         }
 
                       
@@ -104,26 +87,26 @@ namespace ConsoleGame
 
                     if (pressedKey.Key == ConsoleKey.RightArrow)
                     {
-                        if (matrix[player.X, player.Y + 1] != 1)
+                        if (matrix[player.Y, player.X + 1] != 1)
                         {
-                            if (matrix[player.X, player.Y + 1] > 1 && matrix[player.X, player.Y + 1]!=8)
+                            if (matrix[player.Y, player.X + 1] > 1 && matrix[player.Y, player.X + 1]!=8)
                             {
-                                AddScores(player.X, player.Y + 1, matrix);
-                                AddLife(player.X, player.Y + 1, matrix);
-                                matrix[player.X, player.Y + 1] = 0;
+                                AddScores(player.Y, player.X + 1, matrix);
+                                AddLife(player.Y, player.X + 1, matrix);
+                                matrix[player.Y, player.X + 1] = 0;
                             }
-                            else if (matrix[player.X, player.Y + 1]== 8)
+                            else if (matrix[player.Y, player.X + 1]== 8)
                             {
                                 Attack.UpdateAttack();
                             }
-                            Visualization.PrintCharAtPosition(player.X, player.Y, ' ');
-                            player.Y++;
+                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            player.X++;
                         }
                        
                     }
                 }
 
-                Visualization.PrintCharAtPosition(player.X, player.Y, player.PlayerSymbol, player.Color);
+                Visualization.PrintCharAtPosition(player.Y, player.X, player.PlayerSymbol, player.Color);
                 Visualization.PrintStringAtPosition(70, 4, "SCORES: " + Score.ScoreCount, ConsoleColor.White);
                 Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', Life.LifeCount), ConsoleColor.Red);
 
@@ -132,11 +115,11 @@ namespace ConsoleGame
             }
         }
 
-        public static void AddScores(int playerX, int playerY, int [,] matrix)
+        public static void AddScores(int playerY, int playerX, int [,] matrix)
         {
             for (int i = 3; i < 7; i++)
             {
-                if (matrix[playerX, playerY] == i)
+                if (matrix[playerY, playerX] == i)
                 {
                     Score.ScoreCount+=i;
                    
@@ -144,13 +127,12 @@ namespace ConsoleGame
             }
           
         }
-        public static void AddLife(int playerX, int playerY, int[,] matrix)
+        public static void AddLife(int playerY, int playerX, int[,] matrix)
         {
            
-                if (matrix[playerX, playerY] == 7)
+                if (matrix[playerY, playerX] == 7)
                 {
                     Life.LifeCount += 1;
-                    //life += 1;
                 }
         }
 

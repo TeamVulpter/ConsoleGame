@@ -8,7 +8,7 @@ namespace ConsoleGame
 {
     public class Score
     {
-        public static int scoreCount = 0;
+        private static int scoreCount = 0;
         
         public static int ScoreCount
         {

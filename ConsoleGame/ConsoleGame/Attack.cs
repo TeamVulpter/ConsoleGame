@@ -53,7 +53,7 @@ namespace ConsoleGame
                 //    speed = 200;
                 //}
 
-                PlayerShipControls();
+                MovePlayerShip();
 
                 if (steps % enemiesPause == 0)
                 {
@@ -65,7 +65,7 @@ namespace ConsoleGame
                 CheckEnemyAndShotsCollision();
                 Shooting.UpdateShots(shots);
                 Console.Clear();
-                Visualization.PrintStringAtPosition(spaceship.X, spaceship.Y, spaceship.C, spaceship.Color);
+                Visualization.PrintStringAtPosition(spaceship.X, spaceship.Y, spaceship.PlayerString, spaceship.Color);
 
                 foreach (var shot in shots)
                 {
@@ -79,12 +79,12 @@ namespace ConsoleGame
 
                 foreach (EnemyInvader unit in invader)
                 {
-                    Visualization.PrintStringAtPosition(unit.X, unit.Y, unit.C, unit.Color);
+                    Visualization.PrintStringAtPosition(unit.X, unit.Y, unit.EnemyInvaderString, unit.Color);
                 }
                 Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', livesCount), ConsoleColor.Red);
                 Visualization.PrintStringAtPosition(70, 4, "SCORES: " + scoresCount, ConsoleColor.White);
 
-                Visualization.PrintStringAtPosition(70, 6, "TIMER:", ConsoleColor.White); //I have to learn how to implement the Timer class which is built in in .net.
+                Visualization.PrintStringAtPosition(70, 6, "TIMER:", ConsoleColor.White); 
                 Visualization.PrintStringAtPosition(60, 20, new string('*', 40), ConsoleColor.White);
                 for (int i = 1; i < 20; i++)
                 {
@@ -115,7 +115,7 @@ namespace ConsoleGame
             {
                 for (int j = 0; j < invader.Count; j++)
                 {
-                    if (CheckCollision(invader[j].C, shots[i].C, shots[i].X, shots[i].Y, invader[j].X, invader[j].Y))
+                    if (CheckCollision(invader[j].EnemyInvaderString, shots[i].C, shots[i].X, shots[i].Y, invader[j].X, invader[j].Y))
                     {
                         scoresCount++;
                         if (invader.Count > 1)
@@ -142,7 +142,7 @@ namespace ConsoleGame
         {
             for (int enemy = 0; enemy < invader.Count; enemy++)
             {
-                if (CheckCollision(invader[enemy].C, spaceship.C, spaceship.X, spaceship.Y, invader[enemy].X, invader[enemy].Y) || invader[enemy].Y == Console.WindowHeight - 4)
+                if (CheckCollision(invader[enemy].EnemyInvaderString, spaceship.PlayerString, spaceship.X, spaceship.Y, invader[enemy].X, invader[enemy].Y) || invader[enemy].Y == Console.WindowHeight - 4)
                 {
                     livesCount--;
 
@@ -174,7 +174,7 @@ namespace ConsoleGame
                 EnemyInvader newInvader = new EnemyInvader();
                 newInvader.X = oldInvader.X;
                 newInvader.Y = oldInvader.Y + 1;
-                newInvader.C = oldInvader.C;
+                newInvader.EnemyInvaderString = oldInvader.EnemyInvaderString;
                 newInvader.Color = oldInvader.Color;
 
                 if (newInvader.Y < Console.WindowHeight - 1)
@@ -185,7 +185,7 @@ namespace ConsoleGame
             invader = newList;
         }
 
-        private static void PlayerShipControls()
+        private static void MovePlayerShip()
         {
             if (Console.KeyAvailable)
             {
