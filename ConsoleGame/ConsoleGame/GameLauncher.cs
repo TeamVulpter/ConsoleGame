@@ -14,14 +14,7 @@ namespace ConsoleGame
         public static ConsoleKeyInfo keyPressed;
         static void Main(string[] args)
         {
-            ////Since the play field width is created in the Attack class I do not understand why i causes an exception here.Uncomment and try!
-            ////for (int i =35 ; i < 60; i++)
-            ////{
-            ////    Visualization.PrintStringAtPosition(i,5,"_",ConsoleColor.White);
-            ////}
-            ////Writing some welcome text. Remove it if you don't like it :)
-            //Visualization.PrintStringAtPosition(25, 10, "Welcome to Space Invaders", ConsoleColor.DarkCyan);
-            //Visualization.PrintStringAtPosition(29, 12, "Press \"V\" to start", ConsoleColor.DarkCyan);
+
             Console.BufferHeight = Console.WindowHeight = 50;
             Console.BufferWidth = Console.WindowWidth = 100;
             StreamReader reader = new StreamReader(@"../../intro.txt");
@@ -32,21 +25,28 @@ namespace ConsoleGame
                 while (line != null)
                 {
                     lineNumber++;
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine(line);
                     line = reader.ReadLine();
                 }
             }
             System.Media.SoundPlayer musicPlayer = new System.Media.SoundPlayer("../../GameMusic.wav");
             musicPlayer.PlayLooping();
-           
-           
 
             keyPressed = Console.ReadKey();
 
+            //if (keyPressed.Key == ConsoleKey.Enter)
+            //{
+            //    Console.Clear();
+            //    Console.WriteLine("Captain of your ship needs help to collect some supplies for the battle.");
+            //    Console.ReadLine();
+            //}
+            Console.Clear();
+           
             while (true)
             {
 
-                if (keyPressed.Key == ConsoleKey.V)
+                if (keyPressed.Key == ConsoleKey.Enter)
                 {
                     musicPlayer.Stop();
                     Console.Clear();

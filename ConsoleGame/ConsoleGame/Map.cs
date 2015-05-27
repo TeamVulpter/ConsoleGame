@@ -107,8 +107,20 @@ namespace ConsoleGame
                 }
 
                 Visualization.PrintCharAtPosition(player.Y, player.X, player.PlayerSymbol, player.Color);
-                Visualization.PrintStringAtPosition(70, 4, "SCORES: " + Score.ScoreCount, ConsoleColor.White);
-                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', Life.LifeCount), ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(65, 2, "SCORES: " + Score.ScoreCount, ConsoleColor.White);
+                Visualization.PrintStringAtPosition(65, 4, "LIVES: " + new string('\u2665', Life.LifeCount), ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(65, 10, "Captain of your ship needs help", ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(65, 12, "to collect some supplies for the", ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(78, 14, "battle.", ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(65, 34, "e - next level", ConsoleColor.Green);
+                Visualization.PrintStringAtPosition(65, 32, '\u2665' + " - lives", ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(65, 30, "3-6 - points", ConsoleColor.Blue);
+
+                Visualization.PrintStringAtPosition(60, 20, new string('*', 40), ConsoleColor.White);
+                for (int i = 1; i < 20; i++)
+                {
+                    Visualization.PrintStringAtPosition(60, i, "*", ConsoleColor.White);
+                }
 
 
                 Thread.Sleep(50);

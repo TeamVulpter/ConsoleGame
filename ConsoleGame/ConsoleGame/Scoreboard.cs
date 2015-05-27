@@ -7,13 +7,14 @@ namespace ConsoleGame
 {
     public class Scoreboard
     {
-            public static void GenerateScoreboard(int scoreCount)
+            public static void GenerateScoreboard()
             {
-                Console.WriteLine("Enter your name: ");
+               
+                Console.Write("Enter your name: ".PadLeft(55,' '));
                 string newName = Console.ReadLine();
-                int newScore = scoreCount;
+                int newScore = Score.ScoreCount;
                 string newData = newName + ":" + newScore;
-
+               
                 string[] scores = File.ReadAllLines("../../Scoreboard.txt");
                 var orderedScores = scores.OrderByDescending(x => int.Parse(x.Split(':')[1]));
 
@@ -26,11 +27,13 @@ namespace ConsoleGame
                         scores[4] = newData;
                     }
                 }
-
-                foreach (var score in orderedScores)
-                {
-                    Console.WriteLine(score.PadLeft(10, ' '));
-                }
+                Visualization.PrintStringAtPosition(45, 12, "High Scores", ConsoleColor.Green);
+                    foreach (var score in orderedScores)
+                    {
+                       
+                        Console.WriteLine(score.PadLeft(55, ' '));
+                    }
+                    Visualization.PrintStringAtPosition(40, 18, "Press [enter] to exit", ConsoleColor.Red);
 
                 File.WriteAllLines("../../Scoreboard.txt", orderedScores);
                 
