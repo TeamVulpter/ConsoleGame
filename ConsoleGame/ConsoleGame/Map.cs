@@ -117,11 +117,11 @@ namespace ConsoleGame
 
         public static void AddScores(int playerY, int playerX, int [,] matrix)
         {
-            for (int i = 3; i < 7; i++)
+            for (int bonusScore = 3; bonusScore < 7; bonusScore++)
             {
-                if (matrix[playerY, playerX] == i)
+                if (matrix[playerY, playerX] == bonusScore)
                 {
-                    Score.ScoreCount+=i;
+                    Score.ScoreCount+=bonusScore;
                    
                 }
             }
@@ -139,85 +139,86 @@ namespace ConsoleGame
         public static void DrawField(int[,] matrix)
         {
             Random randomWidthGenerator = new Random();
-            Random randomHeightGenerator = new Random();
             Random randomValue = new Random();
             Random randomDigit = new Random();
             Random randomLifeChance = new Random();
             int chance = randomLifeChance.Next(1, 100);
 
+            //exit
+            matrix[1, 1] = 8;
+
             int height = matrix.GetLength(0);
             int width = matrix.GetLength(1);
 
-            for (int i = 0; i < height; i++)
+            //draw matrix borders
+            for (int brick = 0; brick < height; brick++)
             {
-                matrix[i, 0] = 1;
-                matrix[0, i] = 1;
-                matrix[height - 1, i] = 1;
-                matrix[i, height - 1] = 1;
+                matrix[brick, 0] = 1;
+                matrix[0, brick] = 1;
+                matrix[height - 1, brick] = 1;
+                matrix[brick, height - 1] = 1;
             }
-            matrix[1, 1] = 8;
+           
 
             //draw matrix grid
-            for (int row = 5; row < width - 5; row += 5)
+            for (int row = 5; row < height - 5; row += 5)
             {
-                for (int i = 0; i < height; i++)
+                for (int col = 0; col < width; col++)
                 {
-                    matrix[row, i] = 1;
+                    matrix[row, col] = 1;
                 }
             }
 
 
             //draw doors
-            for (int i = 1; i < height - 1; i++)
+            for (int row = 1; row < height - 1; row++)
             {
                 int randomHole = randomValue.Next(1, width - 1);
-                if (matrix[i, randomHole] == 1)
+                if (matrix[row, randomHole] == 1)
                 {
-                    if (matrix[i, randomHole] != 8)
+                    if (matrix[row, randomHole] != 8)
                     {
-                        matrix[i, randomHole] = 0;
+                        matrix[row, randomHole] = 0;
                     }
                 }
             }
 
             //draw digits
-
-            for (int i = 1; i < height - 1; i++)
+            for (int row = 1; row < height - 1; row++)
             {
                 int randomCol = randomWidthGenerator.Next(1, width - 1);
                 int random = randomDigit.Next(3, 9);
-                if (matrix[i, randomCol] == 0)
+                if (matrix[row, randomCol] == 0)
                 {
-
-                    matrix[i, randomCol] = random;
+                    matrix[row, randomCol] = random;
                 }
             }
 
 
             //Console.ForegroundColor = ConsoleColor.White;
 
-            for (int i = 0; i < height; i++)
+            for (int row = 0; row < height; row++)
             {
-                for (int j = 0; j < width; j++)
+                for (int col = 0; col < width; col++)
                 {
-                    if (matrix[i, j] == 1)
+                    if (matrix[row, col] == 1)
                     {
-                        Visualization.PrintCharAtPosition(i, j, '#', ConsoleColor.White);
+                        Visualization.PrintCharAtPosition(row, col, '#', ConsoleColor.White);
                     }
 
-                    else if (matrix[i, j] >= 3 && matrix[i, j] <= 6)
+                    else if (matrix[row, col] >= 3 && matrix[row, col] <= 6)
                     {
-                        Visualization.PrintCharAtPosition(i, j, (char)(matrix[i, j]+48), ConsoleColor.Blue);
+                        Visualization.PrintCharAtPosition(row, col, (char)(matrix[row, col]+48), ConsoleColor.Blue);
                         
                     }
-                    else if (matrix[i, j] == 7 && chance > 20)
+                    else if (matrix[row, col] == 7 && chance > 20)
                     {
-                        Visualization.PrintCharAtPosition(i, j, '\u2665', ConsoleColor.Red);
+                        Visualization.PrintCharAtPosition(row, col, '\u2665', ConsoleColor.Red);
                        
                     }
-                    else if (matrix[i, j] == 8 )
+                    else if (matrix[row, col] == 8 )
                     {
-                        Visualization.PrintCharAtPosition(i, j, '\u0065', ConsoleColor.Green);
+                        Visualization.PrintCharAtPosition(row, col, '\u0065', ConsoleColor.Green);
                       
                     }
                     else

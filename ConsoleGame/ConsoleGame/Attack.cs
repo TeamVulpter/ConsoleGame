@@ -12,8 +12,8 @@ namespace ConsoleGame
 {
     internal class Attack
     {
-        //private static double speed = 400.0;
-        //private static double acceleration = 0.5;
+        private static double speed = 400.0;
+        private static double acceleration = 0.5;
         private const int playfieldWidth = 50;
         private static int livesCount = Life.LifeCount;
         private static int scoresCount = Score.ScoreCount;
@@ -21,18 +21,18 @@ namespace ConsoleGame
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
         private static PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
         private static int steps = 0;
-        private static int enemiesPause = 5;
+        private static int enemiesPause = 3;
         private static Map map = new Map();
         private static Random randomGenerator = new Random();
 
-        public static bool CheckCollision(string invader, string spaceship, int spaceshipX, int spaceshipY, int invaderX, int invaderY)
+        public static bool CheckCollision(string invader, string itemOrCharacter, int spaceshipX, int spaceshipY, int itemOrCharacterX, int itemOrCharacterY)
         {
             bool result = false;
             for (int i = 0; i < invader.Length; i++)
             {
-                for (int j = 0; j < spaceship.Length; j++)
+                for (int j = 0; j < itemOrCharacter.Length; j++)
                 {
-                    if (spaceshipY == invaderY && spaceshipX + j == invaderX + i)
+                    if (spaceshipY == itemOrCharacterY && spaceshipX + j == itemOrCharacterX + i)
                     {
                         
                         result = true;
@@ -47,11 +47,11 @@ namespace ConsoleGame
            
             while (true)
             {
-                //speed += acceleration;
-                //if (speed > 200)
-                //{
-                //    speed = 200;
-                //}
+                speed += acceleration;
+                if (speed > 400)
+                {
+                    speed = 400;
+                }
 
                 MovePlayerShip();
 
@@ -98,29 +98,30 @@ namespace ConsoleGame
                     
                     Visualization.PrintStringAtPosition(8, 10, "GAME OVER! YOU WIN!", ConsoleColor.Red);
                     Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
+                    Console.ReadLine();
                     Console.ForegroundColor = ConsoleColor.Black;
                     Environment.Exit(0);
                   
                 }
                
-                Thread.Sleep(150);
-               
-                //Thread.Sleep((int)(600 - speed));
+                //Thread.Sleep(150);
+
+                Thread.Sleep((int)(600 - speed));
             }
         }
 
         private static void CheckEnemyAndShotsCollision()
         {
-            for (int i = 0; i < shots.Count; i++)
+            for (int shot = 0; shot < shots.Count; shot++)
             {
-                for (int j = 0; j < invader.Count; j++)
+                for (int enemy = 0; enemy < invader.Count; enemy++)
                 {
-                    if (CheckCollision(invader[j].EnemyInvaderString, shots[i].C, shots[i].X, shots[i].Y, invader[j].X, invader[j].Y))
+                    if (CheckCollision(invader[enemy].EnemyInvaderString, shots[shot].C, shots[shot].X, shots[shot].Y, invader[enemy].X, invader[enemy].Y))
                     {
                         scoresCount++;
                         if (invader.Count > 1)
                         {
-                            invader.Remove(invader[j]);
+                            invader.Remove(invader[enemy]);
                         }
                         //else
                         //{
@@ -129,7 +130,7 @@ namespace ConsoleGame
 
                         if (shots.Count > 1)
                         {
-                            shots.Remove(shots[i]);
+                            shots.Remove(shots[shot]);
                         }
 
                     }
@@ -157,6 +158,7 @@ namespace ConsoleGame
                         Console.Clear();
                         Visualization.PrintStringAtPosition(8, 10, "GAME OVER! YOU LOSE!", ConsoleColor.Red);
                         Visualization.PrintStringAtPosition(8, 12, "Press [enter] to exit", ConsoleColor.Red);
+                        Console.ReadLine();
                         Console.ForegroundColor = ConsoleColor.Black;
                         Environment.Exit(0);
                     }
