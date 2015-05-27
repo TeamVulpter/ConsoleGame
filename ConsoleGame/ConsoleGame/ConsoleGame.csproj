@@ -43,10 +43,8 @@
   <ItemGroup>
     <Compile Include="Attack.cs" />
     <Compile Include="Bullet.cs" />
-    <Compile Include="Controls.cs" />
     <Compile Include="EnemyInvader.cs" />
     <Compile Include="GameLauncher.cs" />
-    <Compile Include="GameTimer.cs" />
     <Compile Include="Life.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Player.cs" />

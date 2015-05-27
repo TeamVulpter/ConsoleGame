@@ -11,7 +11,7 @@ namespace ConsoleGame
         public static void Shoot(PlayerShip spaceship, List<Bullet> shots)
         {
             int bulletPosition = spaceship.X + 2;
-            shots.Add(new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.Blue));
+            shots.Add(new Bullet(bulletPosition, Console.WindowHeight - 3, "|", ConsoleColor.White));
         }
 
         public static void UpdateShots(List<Bullet> shots)

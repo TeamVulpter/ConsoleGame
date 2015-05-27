@@ -5,7 +5,6 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using TimerExample;
 
 
 namespace ConsoleGame
@@ -92,7 +91,6 @@ namespace ConsoleGame
                 if (scoresCount == 200)
                 {
                     Console.Clear();
-                    
                     Visualization.PrintStringAtPosition(40, 10, "GAME OVER! YOU WIN!", ConsoleColor.Green);
                     Scoreboard.GenerateScoreboard();
                     Console.ReadLine();
@@ -145,11 +143,9 @@ namespace ConsoleGame
                     Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
                     if (livesCount <= 0)
                     {
-                        
                         Console.Clear();
                         Visualization.PrintStringAtPosition(40, 10, "GAME OVER! YOU LOSE!", ConsoleColor.Red);
                         Scoreboard.GenerateScoreboard();
-                        //Visualization.PrintStringAtPosition(40, 18, "Press [enter] to exit", ConsoleColor.Red);
                         Console.ReadLine();
                         Console.ForegroundColor = ConsoleColor.Black;
                         Environment.Exit(0);

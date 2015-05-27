@@ -35,12 +35,6 @@ namespace ConsoleGame
 
             keyPressed = Console.ReadKey();
 
-            //if (keyPressed.Key == ConsoleKey.Enter)
-            //{
-            //    Console.Clear();
-            //    Console.WriteLine("Captain of your ship needs help to collect some supplies for the battle.");
-            //    Console.ReadLine();
-            //}
             Console.Clear();
            
             while (true)
@@ -52,11 +46,6 @@ namespace ConsoleGame
                     Console.Clear();
                     Map.UpdateMap();
                 }
-
-                //if (keyPressed.Key == ConsoleKey.C)
-                //{
-                //    Attack.UpdateAttack();
-                //}
             }
         }
     }

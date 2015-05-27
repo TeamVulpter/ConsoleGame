@@ -81,8 +81,6 @@ namespace ConsoleGame
                             Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
                             player.X--;
                         }
-
-                      
                     }
 
                     if (pressedKey.Key == ConsoleKey.RightArrow)
