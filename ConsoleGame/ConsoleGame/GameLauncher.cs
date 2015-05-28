@@ -11,7 +11,6 @@ namespace ConsoleGame
 {
     internal class GameLauncher
     {
-        public static ConsoleKeyInfo keyPressed;
         static void Main(string[] args)
         {
 
