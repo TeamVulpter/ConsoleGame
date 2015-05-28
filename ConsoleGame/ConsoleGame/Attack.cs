@@ -24,14 +24,14 @@ namespace ConsoleGame
         private static Map map = new Map();
         private static Random randomGenerator = new Random();
 
-        public static bool CheckCollision(string invader, string itemOrCharacter, int spaceshipX, int spaceshipY, int itemOrCharacterX, int itemOrCharacterY)
+        public static bool CheckCollision(string invader, string itemOrCharacter, int itemOrCharacterX, int itemOrCharacterY, int invaderX, int invaderY)
         {
             bool result = false;
             for (int i = 0; i < invader.Length; i++)
             {
                 for (int j = 0; j < itemOrCharacter.Length; j++)
                 {
-                    if (spaceshipY == itemOrCharacterY && spaceshipX + j == itemOrCharacterX + i)
+                    if (itemOrCharacterY == invaderY && itemOrCharacterX + j == invaderX + i)
                     {
                         
                         result = true;
