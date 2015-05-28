@@ -14,8 +14,6 @@ namespace ConsoleGame
         private static double speed = 400.0;
         private static double acceleration = 0.5;
         private const int playfieldWidth = 50;
-        private static int livesCount = Life.LifeCount;
-        private static int scoresCount = Score.ScoreCount;
         private static List<Bullet> shots = new List<Bullet>();
         private static List<EnemyInvader> invader = new List<EnemyInvader>();
         private static PlayerShip spaceship = new PlayerShip(5, Console.WindowHeight - 2, "_/|\\_", ConsoleColor.Yellow);
@@ -79,15 +77,15 @@ namespace ConsoleGame
                 {
                     Visualization.PrintStringAtPosition(unit.X, unit.Y, unit.EnemyInvaderString, unit.Color);
                 }
-                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', livesCount), ConsoleColor.Red);
-                Visualization.PrintStringAtPosition(70, 4, "SCORES: " + scoresCount, ConsoleColor.White);
+                Visualization.PrintStringAtPosition(70, 2, "LIVES: " + new string('\u2665', Life.LifeCount), ConsoleColor.Red);
+                Visualization.PrintStringAtPosition(70, 4, "SCORES: " + Score.ScoreCount, ConsoleColor.White);
                 Visualization.PrintStringAtPosition(60, 20, new string('*', 40), ConsoleColor.White);
                 for (int i = 1; i < 20; i++)
                 {
                     Visualization.PrintStringAtPosition(60, i, "*", ConsoleColor.White);
                 }
 
-                if (scoresCount == 200)
+                if (Score.ScoreCount >= 200)
                 {
                     Console.Clear();
                     Visualization.PrintStringAtPosition(40, 10, "GAME OVER! YOU WIN!", ConsoleColor.Green);
@@ -112,7 +110,7 @@ namespace ConsoleGame
                 {
                     if (CheckCollision(invader[enemy].EnemyInvaderString, shots[shot].BulletSymbol, shots[shot].X, shots[shot].Y, invader[enemy].X, invader[enemy].Y))
                     {
-                        scoresCount++;
+                        Score.ScoreCount++;
                         enemiesToRemove.Add(enemy);
                         shotsToRemove.Add(shot);
                     }
@@ -147,7 +145,7 @@ namespace ConsoleGame
             {
                 if (CheckCollision(invader[enemy].EnemyInvaderString, spaceship.PlayerString, spaceship.X, spaceship.Y, invader[enemy].X, invader[enemy].Y) || invader[enemy].Y == Console.WindowHeight - 4)
                 {
-                    livesCount--;
+                    Life.LifeCount--;
 
                     if (invader.Count > 1)
                     {
@@ -155,7 +153,7 @@ namespace ConsoleGame
                     }
 
                     Visualization.PrintOnPosition(spaceship.X, spaceship.Y, 'X', ConsoleColor.Red);
-                    if (livesCount <= 0)
+                    if (Life.LifeCount <= 0)
                     {
                         Console.Clear();
                         Visualization.PrintStringAtPosition(40, 10, "GAME OVER! YOU LOSE!", ConsoleColor.Red);
