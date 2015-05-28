@@ -38,7 +38,7 @@ namespace ConsoleGame
                                 Attack.UpdateAttack();
                             }
                             
-                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            Visualization.PrintCharMatrixAtPosition(player.Y, player.X, ' ');
                             player.Y--;
                         }
                         
@@ -58,7 +58,7 @@ namespace ConsoleGame
                             {
                                 Attack.UpdateAttack();
                             }
-                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            Visualization.PrintCharMatrixAtPosition(player.Y, player.X, ' ');
                             player.Y++;
                         }
                       
@@ -78,7 +78,7 @@ namespace ConsoleGame
                             {
                                 Attack.UpdateAttack();
                             }
-                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            Visualization.PrintCharMatrixAtPosition(player.Y, player.X, ' ');
                             player.X--;
                         }
                     }
@@ -97,14 +97,14 @@ namespace ConsoleGame
                             {
                                 Attack.UpdateAttack();
                             }
-                            Visualization.PrintCharAtPosition(player.Y, player.X, ' ');
+                            Visualization.PrintCharMatrixAtPosition(player.Y, player.X, ' ');
                             player.X++;
                         }
                        
                     }
                 }
 
-                Visualization.PrintCharAtPosition(player.Y, player.X, player.PlayerSymbol, player.Color);
+                Visualization.PrintCharMatrixAtPosition(player.Y, player.X, player.PlayerSymbol, player.Color);
                 Visualization.PrintStringAtPosition(65, 2, "SCORES: " + Score.ScoreCount, ConsoleColor.White);
                 Visualization.PrintStringAtPosition(65, 4, "LIVES: " + new string('\u2665', Life.LifeCount), ConsoleColor.Red);
                 Visualization.PrintStringAtPosition(65, 10, "Captain of your ship needs help", ConsoleColor.Red);
@@ -213,22 +213,22 @@ namespace ConsoleGame
                 {
                     if (matrix[row, col] == 1)
                     {
-                        Visualization.PrintCharAtPosition(row, col, '#', ConsoleColor.White);
+                        Visualization.PrintCharMatrixAtPosition(row, col, '#', ConsoleColor.White);
                     }
 
                     else if (matrix[row, col] >= 3 && matrix[row, col] <= 6)
                     {
-                        Visualization.PrintCharAtPosition(row, col, (char)(matrix[row, col]+48), ConsoleColor.Blue);
+                        Visualization.PrintCharMatrixAtPosition(row, col, (char)(matrix[row, col]+48), ConsoleColor.Blue);
                         
                     }
                     else if (matrix[row, col] == 7 && chance > 20)
                     {
-                        Visualization.PrintCharAtPosition(row, col, '\u2665', ConsoleColor.Red);
+                        Visualization.PrintCharMatrixAtPosition(row, col, '\u2665', ConsoleColor.Red);
                        
                     }
                     else if (matrix[row, col] == 8 )
                     {
-                        Visualization.PrintCharAtPosition(row, col, '\u0065', ConsoleColor.Green);
+                        Visualization.PrintCharMatrixAtPosition(row, col, '\u0065', ConsoleColor.Green);
                       
                     }
                     else

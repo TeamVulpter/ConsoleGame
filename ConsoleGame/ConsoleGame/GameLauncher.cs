@@ -32,19 +32,18 @@ namespace ConsoleGame
             }
             System.Media.SoundPlayer musicPlayer = new System.Media.SoundPlayer("../../GameMusic.wav");
             musicPlayer.PlayLooping();
-
-            keyPressed = Console.ReadKey();
-
-            Console.Clear();
            
             while (true)
             {
-
-                if (keyPressed.Key == ConsoleKey.Enter)
+                if (Console.KeyAvailable)
                 {
-                    musicPlayer.Stop();
-                    Console.Clear();
-                    Map.UpdateMap();
+                    ConsoleKeyInfo keyPressed = Console.ReadKey(true);
+                    if (keyPressed.Key == ConsoleKey.Enter)
+                    {
+                        musicPlayer.Stop();
+                        Console.Clear();
+                        Map.UpdateMap();
+                    }
                 }
             }
         }

@@ -70,7 +70,7 @@ namespace ConsoleGame
                 {
                     if (shot.Y > 0 && shot.Y < Console.WindowHeight - 3)
                     {
-                        Visualization.DrawSymbolAtCoordinates(shot.X, shot.Y, shot.C, shot.Color);
+                        Visualization.PrintStringAtPosition(shot.X, shot.Y, shot.BulletSymbol, shot.Color);
                     }
 
                 }
@@ -104,27 +104,42 @@ namespace ConsoleGame
 
         private static void CheckEnemyAndShotsCollision()
         {
+            List<int> enemiesToRemove = new List<int>();
+            List<int> shotsToRemove = new List<int>();
+
             for (int shot = 0; shot < shots.Count; shot++)
             {
                 for (int enemy = 0; enemy < invader.Count; enemy++)
                 {
-                    if (CheckCollision(invader[enemy].EnemyInvaderString, shots[shot].C, shots[shot].X, shots[shot].Y, invader[enemy].X, invader[enemy].Y))
+                    if (CheckCollision(invader[enemy].EnemyInvaderString, shots[shot].BulletSymbol, shots[shot].X, shots[shot].Y, invader[enemy].X, invader[enemy].Y))
                     {
                         scoresCount++;
-                        if (invader.Count > 1)
-                        {
-                            invader.Remove(invader[enemy]);
-                        }
-
-                        if (shots.Count > 1)
-                        {
-                            shots.Remove(shots[shot]);
-                        }
-
+                        enemiesToRemove.Add(enemy);
+                        shotsToRemove.Add(shot);
                     }
                 }
-
             }
+            List<EnemyInvader> newEnemies = new List<EnemyInvader>();
+            List<Bullet> newShots = new List<Bullet>();
+
+            for (int i = 0; i < invader.Count; i++)
+            {
+                if (!enemiesToRemove.Contains(i))
+                {
+                    newEnemies.Add(invader[i]);
+                }
+            }
+
+            for (int i = 0; i < shots.Count; i++)
+            {
+                if (!shotsToRemove.Contains(i))
+                {
+                    newShots.Add(shots[i]);
+                }
+            }
+
+            invader = newEnemies;
+            shots = newShots;
         }
 
         private static void TakeLivesTillPlayerIsDead()

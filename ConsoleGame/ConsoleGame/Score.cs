@@ -14,7 +14,6 @@ namespace ConsoleGame
         {
             get { return scoreCount; }
             set { scoreCount = value; }
-
         }
     }
 }
