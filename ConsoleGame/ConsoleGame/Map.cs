@@ -112,7 +112,7 @@ namespace ConsoleGame
                 Visualization.PrintStringAtPosition(78, 14, "battle.", ConsoleColor.Red);
                 Visualization.PrintStringAtPosition(65, 34, "e - next level", ConsoleColor.Green);
                 Visualization.PrintStringAtPosition(65, 32, '\u2665' + " - lives", ConsoleColor.Red);
-                Visualization.PrintStringAtPosition(65, 30, "3-6 - points", ConsoleColor.Blue);
+                Visualization.PrintStringAtPosition(65, 30, "3 - 6 - points", ConsoleColor.Blue);
 
                 Visualization.PrintStringAtPosition(60, 20, new string('*', 40), ConsoleColor.White);
                 for (int i = 1; i < 20; i++)

@@ -72,7 +72,6 @@ namespace ConsoleGame
                     {
                         Visualization.PrintStringAtPosition(shot.X, shot.Y, shot.BulletSymbol, shot.Color);
                     }
-
                 }
               
 
